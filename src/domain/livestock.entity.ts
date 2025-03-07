@@ -31,7 +31,29 @@ export class Livestock {
     return new Livestock(props);
   }
 
-  update(props: Partial<LivestockConstructorProps>): Livestock {
-    return new Livestock({ ...this, ...props });
+  changeName(name: string): Livestock {
+    return new Livestock({ ...this, name });
+  }
+
+  changeDescription(description: string | null): Livestock {
+    return new Livestock({ ...this, description });
+  }
+
+  activate(): Livestock {
+    return new Livestock({ ...this, is_active: true });
+  }
+
+  deactivate(): Livestock {
+    return new Livestock({ ...this, is_active: false });
+  }
+
+  toJSON() {
+    return {
+      livestock_id: this.livestock_id,
+      name: this.name,
+      description: this.description,
+      is_active: this.is_active,
+      created_at: this.created_at,
+    };
   }
 }
