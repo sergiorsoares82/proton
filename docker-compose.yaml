@@ -1,0 +1,21 @@
+# Define the services that will run in this Compose setup
+services:
+  # This is the 'app' service, which represents your application container
+  app:
+    # The build context for this service is the current directory (.)
+    # Docker will use the Dockerfile in the current directory to build the image for this service
+    build: .
+
+    # This defines the command to run inside the container when it starts
+    # It will run the custom script '.docker/start.sh' to start the application
+    command: ./.docker/start.sh
+
+    # Map port 3000 on the host machine to port 3000 in the container
+    # This allows you to access the application on http://localhost:3000
+    ports:
+      - 3000:3000
+
+    # This mounts the current directory (.) on your host machine to /home/node/app inside the container
+    # It allows you to edit your local project files, and the changes will be reflected in the container
+    volumes:
+      - .:/home/node/app
