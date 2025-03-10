@@ -1,5 +1,5 @@
 import { EntityValidationError } from "../../shared/domain/validators/validation.error";
-import { Uuid } from "../../shared/domain/value-object/uuid.vo";
+import { Uuid } from "../../shared/domain/value-objects/uuid.vo";
 import { AnimalCategory } from "./animal-category.aggregate";
 import { Gender } from "./animal.aggregate";
 

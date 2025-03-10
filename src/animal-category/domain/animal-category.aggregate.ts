@@ -1,7 +1,7 @@
 import { Entity } from "../../shared/domain/entity";
 import { EntityValidationError } from "../../shared/domain/validators/validation.error";
 import type { ValueObject } from "../../shared/domain/value-object";
-import { Uuid } from "../../shared/domain/value-object/uuid.vo";
+import { Uuid } from "../../shared/domain/value-objects/uuid.vo";
 import { AnimalCategoryValidatorFactory } from "./animal-category.validator";
 import type { Gender } from "./animal.aggregate";
 
