@@ -1,7 +1,8 @@
+import { Uuid } from "../../shared/domain/value-object/uuid.vo";
 import type { Gender } from "./animal.aggregate";
 
 type AnimalCategoryConstructorProps = {
-  animalCategoryId?: string;
+  animalCategoryId?: Uuid;
   name: string;
   gender: Gender;
   isActive?: boolean;
@@ -14,13 +15,13 @@ type AnimalCategoryCreateCommand = {
 };
 
 export class AnimalCategory {
-  animalCategoryId: string;
+  animalCategoryId: Uuid;
   name: string;
   gender: Gender;
   isActive: boolean;
 
   constructor(props: AnimalCategoryConstructorProps) {
-    this.animalCategoryId = props.animalCategoryId ?? "";
+    this.animalCategoryId = props.animalCategoryId ?? new Uuid();
     this.name = props.name;
     this.gender = props.gender;
     this.isActive = props.isActive ?? true;
@@ -44,7 +45,7 @@ export class AnimalCategory {
 
   toJSON() {
     return {
-      animalCategoryId: this.animalCategoryId,
+      animalCategoryId: this.animalCategoryId.id,
       name: this.name,
       gender: this.gender,
       isActive: this.isActive,

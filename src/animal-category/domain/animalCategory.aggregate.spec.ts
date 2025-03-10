@@ -1,3 +1,4 @@
+import { Uuid } from "../../shared/domain/value-object/uuid.vo";
 import { AnimalCategory } from "./animalCategory.aggregate";
 
 describe("AnimalCategoryAggregate", () => {
@@ -8,7 +9,7 @@ describe("AnimalCategoryAggregate", () => {
         gender: "M",
       });
       expect(animalCategory).toBeInstanceOf(AnimalCategory);
-      expect(animalCategory.animalCategoryId).toBe("");
+      expect(animalCategory.animalCategoryId).toBeInstanceOf(Uuid);
       expect(animalCategory.name).toBe("calf");
       expect(animalCategory.gender).toBe("M");
       expect(animalCategory.isActive).toBe(true);
@@ -16,13 +17,13 @@ describe("AnimalCategoryAggregate", () => {
 
     it("should create an instance of AnimalCategory with provided values", () => {
       const animalCategory = new AnimalCategory({
-        animalCategoryId: "1",
+        animalCategoryId: new Uuid(),
         name: "calf",
         gender: "M",
         isActive: false,
       });
       expect(animalCategory).toBeInstanceOf(AnimalCategory);
-      expect(animalCategory.animalCategoryId).toBe("1");
+      expect(animalCategory.animalCategoryId).toBeInstanceOf(Uuid);
       expect(animalCategory.name).toBe("calf");
       expect(animalCategory.gender).toBe("M");
       expect(animalCategory.isActive).toBe(false);
@@ -36,7 +37,7 @@ describe("AnimalCategoryAggregate", () => {
         gender: "M",
       });
       expect(animalCategory).toBeInstanceOf(AnimalCategory);
-      expect(animalCategory.animalCategoryId).toBe("");
+      expect(animalCategory.animalCategoryId).toBeInstanceOf(Uuid);
       expect(animalCategory.name).toBe("calf");
       expect(animalCategory.gender).toBe("M");
       expect(animalCategory.isActive).toBe(true);
@@ -47,7 +48,7 @@ describe("AnimalCategoryAggregate", () => {
         gender: "M",
       });
       expect(animalCategory).toBeInstanceOf(AnimalCategory);
-      expect(animalCategory.animalCategoryId).toBe("");
+      expect(animalCategory.animalCategoryId).toBeInstanceOf(Uuid);
       expect(animalCategory.name).toBe("calf");
       expect(animalCategory.gender).toBe("M");
       expect(animalCategory.isActive).toBe(true);
@@ -82,7 +83,7 @@ describe("AnimalCategoryAggregate", () => {
     it("should convert the animal category to JSON", () => {
       const json = animalCategory.toJSON();
       expect(json).toEqual({
-        animalCategoryId: "",
+        animalCategoryId: animalCategory.animalCategoryId.id,
         name: "calf",
         gender: "M",
         isActive: true,
