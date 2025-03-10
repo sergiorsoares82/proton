@@ -1,4 +1,5 @@
 import { Uuid } from "../../shared/domain/value-object/uuid.vo";
+import { AnimalCategoryValidatorFactory } from "./animal-category.validator";
 import type { Gender } from "./animal.aggregate";
 
 type AnimalCategoryConstructorProps = {
@@ -28,11 +29,14 @@ export class AnimalCategory {
   }
 
   static create(props: AnimalCategoryCreateCommand): AnimalCategory {
-    return new AnimalCategory(props);
+    const animalCategory = new AnimalCategory(props);
+    AnimalCategory.validate(animalCategory);
+    return animalCategory;
   }
 
   changeName(name: string): void {
     this.name = name;
+    AnimalCategory.validate(this);
   }
 
   activate(): void {
@@ -41,6 +45,11 @@ export class AnimalCategory {
 
   deactivate(): void {
     this.isActive = false;
+  }
+
+  static validate(entity: AnimalCategory) {
+    const validator = AnimalCategoryValidatorFactory.create();
+    return validator.validate(entity);
   }
 
   toJSON() {

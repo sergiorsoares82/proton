@@ -1,7 +1,11 @@
 import { Uuid } from "../../shared/domain/value-object/uuid.vo";
 import { AnimalCategory } from "./animal-category.aggregate";
 
-describe("AnimalCategoryAggregate", () => {
+describe("AnimalCategoryAggregate Unit Tests", () => {
+  let validateSpy: any;
+  beforeEach(() => {
+    validateSpy = jest.spyOn(AnimalCategory, "validate");
+  });
   describe("constructor", () => {
     it("should create an instance of AnimalCategory with default values", () => {
       const animalCategory = new AnimalCategory({
@@ -41,6 +45,7 @@ describe("AnimalCategoryAggregate", () => {
       expect(animalCategory.name).toBe("calf");
       expect(animalCategory.gender).toBe("M");
       expect(animalCategory.isActive).toBe(true);
+      expect(validateSpy).toHaveBeenCalledTimes(1);
     });
     it("should create an instance of AnimalCategory with provided values", () => {
       const animalCategory = AnimalCategory.create({
@@ -52,6 +57,7 @@ describe("AnimalCategoryAggregate", () => {
       expect(animalCategory.name).toBe("calf");
       expect(animalCategory.gender).toBe("M");
       expect(animalCategory.isActive).toBe(true);
+      expect(validateSpy).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -67,6 +73,7 @@ describe("AnimalCategoryAggregate", () => {
     it("should change the name of the animal category", () => {
       animalCategory.changeName("cow");
       expect(animalCategory.name).toBe("cow");
+      expect(validateSpy).toHaveBeenCalledTimes(1);
     });
 
     it("should activate the animal category", () => {

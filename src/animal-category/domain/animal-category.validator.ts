@@ -35,7 +35,7 @@ export class AnimalCategoryValidator extends ClassValidatorFields<AnimalCategory
   }
 }
 
-export class CategoryValidatorFactory {
+export class AnimalCategoryValidatorFactory {
   static create() {
     return new AnimalCategoryValidator();
   }
