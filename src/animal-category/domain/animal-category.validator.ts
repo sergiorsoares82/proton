@@ -4,9 +4,10 @@ import {
   IsNotEmpty,
   IsOptional,
   IsBoolean,
+  IsEnum,
 } from "class-validator";
 import { ClassValidatorFields } from "../../shared/domain/validators/class-validator-fields";
-import type { Gender } from "./animal.aggregate";
+import { Gender } from "./animal.aggregate";
 import type { AnimalCategory } from "./animal-category.aggregate";
 
 export class AnimalCategoryRules {
@@ -15,7 +16,8 @@ export class AnimalCategoryRules {
   @IsNotEmpty()
   name: string;
 
-  @IsString()
+  @IsEnum(Gender, { message: "Gender must be either 'M' or 'F'" })
+  @IsNotEmpty()
   gender: Gender;
 
   @IsBoolean()

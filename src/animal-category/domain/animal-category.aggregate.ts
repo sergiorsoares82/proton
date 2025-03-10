@@ -52,9 +52,7 @@ export class AnimalCategory {
     const validator = AnimalCategoryValidatorFactory.create();
     const isValid = validator.validate(entity);
     if (!isValid) {
-      if (validator.errors) {
-        throw new EntityValidationError(validator.errors);
-      }
+      throw new EntityValidationError(validator.errors);
     }
   }
 

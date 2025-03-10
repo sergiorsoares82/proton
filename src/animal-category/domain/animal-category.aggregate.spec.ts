@@ -1,6 +1,7 @@
 import { EntityValidationError } from "../../shared/domain/validators/validation.error";
 import { Uuid } from "../../shared/domain/value-object/uuid.vo";
 import { AnimalCategory } from "./animal-category.aggregate";
+import { Gender } from "./animal.aggregate";
 
 describe("AnimalCategoryAggregate Unit Tests", () => {
   let validateSpy: any;
@@ -11,7 +12,7 @@ describe("AnimalCategoryAggregate Unit Tests", () => {
     it("should create an instance of AnimalCategory with default values", () => {
       const animalCategory = new AnimalCategory({
         name: "calf",
-        gender: "M",
+        gender: Gender.MALE,
       });
       expect(animalCategory).toBeInstanceOf(AnimalCategory);
       expect(animalCategory.animalCategoryId).toBeInstanceOf(Uuid);
@@ -24,7 +25,7 @@ describe("AnimalCategoryAggregate Unit Tests", () => {
       const animalCategory = new AnimalCategory({
         animalCategoryId: new Uuid(),
         name: "calf",
-        gender: "M",
+        gender: Gender.MALE,
         isActive: false,
       });
       expect(animalCategory).toBeInstanceOf(AnimalCategory);
@@ -39,7 +40,7 @@ describe("AnimalCategoryAggregate Unit Tests", () => {
     it("should create an instance of AnimalCategory with default values", () => {
       const animalCategory = AnimalCategory.create({
         name: "calf",
-        gender: "M",
+        gender: Gender.MALE,
       });
       expect(animalCategory).toBeInstanceOf(AnimalCategory);
       expect(animalCategory.animalCategoryId).toBeInstanceOf(Uuid);
@@ -51,7 +52,7 @@ describe("AnimalCategoryAggregate Unit Tests", () => {
     it("should create an instance of AnimalCategory with provided values", () => {
       const animalCategory = AnimalCategory.create({
         name: "calf",
-        gender: "M",
+        gender: Gender.MALE,
       });
       expect(animalCategory).toBeInstanceOf(AnimalCategory);
       expect(animalCategory.animalCategoryId).toBeInstanceOf(Uuid);
@@ -67,7 +68,7 @@ describe("AnimalCategoryAggregate Unit Tests", () => {
     beforeEach(() => {
       animalCategory = new AnimalCategory({
         name: "calf",
-        gender: "M",
+        gender: Gender.FEMALE,
       });
     });
 
@@ -93,25 +94,67 @@ describe("AnimalCategoryAggregate Unit Tests", () => {
       expect(json).toEqual({
         animalCategoryId: animalCategory.animalCategoryId.id,
         name: "calf",
-        gender: "M",
+        gender: "F",
         isActive: true,
       });
     });
   });
 
   describe("Category Validator", () => {
-    describe("create command", () => {
-      test("xpto", () => {
-        expect(() => {
+    describe("name property", () => {
+      it("should invalidate null name", () => {
+        expect(() =>
+          AnimalCategory.create({ name: null, gender: Gender.MALE })
+        ).containsErrorMessages({
+          name: [
+            "name should not be empty",
+            "name must be a string",
+            "name must be shorter than or equal to 255 characters",
+          ],
+        });
+      });
+
+      it("should invalidate empty name", () => {
+        expect(() =>
+          AnimalCategory.create({ name: "", gender: Gender.FEMALE })
+        ).containsErrorMessages({
+          name: ["name should not be empty"],
+        });
+      });
+
+      it("should invalidate non-string name", () => {
+        expect(() =>
+          AnimalCategory.create({ name: 5 as any, gender: Gender.MALE })
+        ).containsErrorMessages({
+          name: [
+            "name must be a string",
+            "name must be shorter than or equal to 255 characters",
+          ],
+        });
+      });
+
+      it("should invalidate long name", () => {
+        expect(() =>
           AnimalCategory.create({
-            name: "",
-            gender: "M",
-          });
-        }).toThrow(
-          new EntityValidationError({
-            name: ["name is required"],
+            name: "a".repeat(256),
+            gender: Gender.FEMALE,
           })
-        );
+        ).containsErrorMessages({
+          name: ["name must be shorter than or equal to 255 characters"],
+        });
+      });
+    });
+
+    describe("gender property", () => {
+      it("should invalidate null", () => {
+        expect(() =>
+          AnimalCategory.create({ name: "calf", gender: null })
+        ).containsErrorMessages({
+          gender: [
+            "gender should not be empty",
+            "Gender must be either 'M' or 'F'",
+          ],
+        });
       });
     });
   });

@@ -1,4 +1,7 @@
-export type Gender = 'M' | 'F';
+export enum Gender {
+  MALE = "M",
+  FEMALE = "F",
+}
 
 type AnimalConstructorProps = {
   animalId?: string;
