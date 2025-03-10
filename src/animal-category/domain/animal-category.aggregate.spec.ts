@@ -1,3 +1,4 @@
+import { EntityValidationError } from "../../shared/domain/validators/validation.error";
 import { Uuid } from "../../shared/domain/value-object/uuid.vo";
 import { AnimalCategory } from "./animal-category.aggregate";
 
@@ -94,6 +95,23 @@ describe("AnimalCategoryAggregate Unit Tests", () => {
         name: "calf",
         gender: "M",
         isActive: true,
+      });
+    });
+  });
+
+  describe("Category Validator", () => {
+    describe("create command", () => {
+      test("xpto", () => {
+        expect(() => {
+          AnimalCategory.create({
+            name: "",
+            gender: "M",
+          });
+        }).toThrow(
+          new EntityValidationError({
+            name: ["name is required"],
+          })
+        );
       });
     });
   });

@@ -1,3 +1,4 @@
+import { EntityValidationError } from "../../shared/domain/validators/validation.error";
 import { Uuid } from "../../shared/domain/value-object/uuid.vo";
 import { AnimalCategoryValidatorFactory } from "./animal-category.validator";
 import type { Gender } from "./animal.aggregate";
@@ -49,7 +50,12 @@ export class AnimalCategory {
 
   static validate(entity: AnimalCategory) {
     const validator = AnimalCategoryValidatorFactory.create();
-    return validator.validate(entity);
+    const isValid = validator.validate(entity);
+    if (!isValid) {
+      if (validator.errors) {
+        throw new EntityValidationError(validator.errors);
+      }
+    }
   }
 
   toJSON() {
