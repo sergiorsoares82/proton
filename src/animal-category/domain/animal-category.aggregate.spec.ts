@@ -1,5 +1,5 @@
 import { Uuid } from "../../shared/domain/value-object/uuid.vo";
-import { AnimalCategory } from "./animalCategory.aggregate";
+import { AnimalCategory } from "./animal-category.aggregate";
 
 describe("AnimalCategoryAggregate", () => {
   describe("constructor", () => {
