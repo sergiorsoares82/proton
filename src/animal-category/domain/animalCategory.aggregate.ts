@@ -1,0 +1,53 @@
+import type { Gender } from "./animal.aggregate";
+
+type AnimalCategoryConstructorProps = {
+  animalCategoryId?: string;
+  name: string;
+  gender: Gender;
+  isActive?: boolean;
+};
+
+type AnimalCategoryCreateCommand = {
+  name: string;
+  gender: Gender;
+  isActive?: boolean;
+};
+
+export class AnimalCategory {
+  animalCategoryId: string;
+  name: string;
+  gender: Gender;
+  isActive: boolean;
+
+  constructor(props: AnimalCategoryConstructorProps) {
+    this.animalCategoryId = props.animalCategoryId ?? "";
+    this.name = props.name;
+    this.gender = props.gender;
+    this.isActive = props.isActive ?? true;
+  }
+
+  static create(props: AnimalCategoryCreateCommand): AnimalCategory {
+    return new AnimalCategory(props);
+  }
+
+  changeName(name: string): void {
+    this.name = name;
+  }
+
+  activate(): void {
+    this.isActive = true;
+  }
+
+  deactivate(): void {
+    this.isActive = false;
+  }
+
+  toJSON() {
+    return {
+      animalCategoryId: this.animalCategoryId,
+      name: this.name,
+      gender: this.gender,
+      isActive: this.isActive,
+    };
+  }
+}
