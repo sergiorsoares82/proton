@@ -59,7 +59,7 @@ export class AnimalCategory extends Entity {
     }
   }
 
-  get entity_id(): ValueObject {
+  get entityId(): ValueObject {
     return this.animalCategoryId;
   }
 
