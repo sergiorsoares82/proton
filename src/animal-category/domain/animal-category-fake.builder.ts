@@ -45,7 +45,7 @@ export class AnimalCategoryFakeBuilder<TBuild = any> {
     return this;
   }
 
-  wtihGender(valueOrFactory: PropOrFactory<Gender>) {
+  withGender(valueOrFactory: PropOrFactory<Gender>) {
     this._gender = valueOrFactory;
     return this;
   }
@@ -110,7 +110,7 @@ export class AnimalCategoryFakeBuilder<TBuild = any> {
   }
 
   get createdAt() {
-    return this.getValue("created_at");
+    return this.getValue("createdAt");
   }
 
   private getValue(prop: any) {

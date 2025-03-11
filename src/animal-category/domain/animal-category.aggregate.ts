@@ -11,6 +11,7 @@ type AnimalCategoryConstructorProps = {
   name: string;
   gender: Gender;
   isActive?: boolean;
+  createdAt?: Date;
 };
 
 type AnimalCategoryCreateCommand = {
@@ -24,6 +25,7 @@ export class AnimalCategory extends Entity {
   name: string;
   gender: Gender;
   isActive: boolean;
+  createdAt: Date;
 
   constructor(props: AnimalCategoryConstructorProps) {
     super();
@@ -31,6 +33,7 @@ export class AnimalCategory extends Entity {
     this.name = props.name;
     this.gender = props.gender;
     this.isActive = props.isActive ?? true;
+    this.createdAt = props.createdAt ?? new Date();
   }
 
   static create(props: AnimalCategoryCreateCommand): AnimalCategory {
