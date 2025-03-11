@@ -2,6 +2,7 @@ import { Entity } from "../../shared/domain/entity";
 import { EntityValidationError } from "../../shared/domain/validators/validation.error";
 import type { ValueObject } from "../../shared/domain/value-object";
 import { Uuid } from "../../shared/domain/value-objects/uuid.vo";
+import { AnimalCategoryFakeBuilder } from "./animal-category-fake.builder";
 import { AnimalCategoryValidatorFactory } from "./animal-category.validator";
 import type { Gender } from "./animal.aggregate";
 
@@ -61,6 +62,10 @@ export class AnimalCategory extends Entity {
 
   get entityId(): ValueObject {
     return this.animalCategoryId;
+  }
+
+  static fake() {
+    return AnimalCategoryFakeBuilder;
   }
 
   toJSON() {
