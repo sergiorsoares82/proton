@@ -7,7 +7,7 @@ export class AnimalCategoryInMemoryRepository extends InMemorySearchableReposito
   AnimalCategory,
   Uuid
 > {
-  sortableFields: string[] = ["name", "created_at"];
+  sortableFields: string[] = ["name", "createdAt"];
 
   protected async applyFilter(
     items: AnimalCategory[],
@@ -29,7 +29,7 @@ export class AnimalCategoryInMemoryRepository extends InMemorySearchableReposito
   ) {
     return sort
       ? super.applySort(items, sort, sort_dir)
-      : super.applySort(items, "created_at", "desc");
+      : super.applySort(items, "createdAt", "desc");
   }
 
   getEntity(): new (...args: any[]) => AnimalCategory {
