@@ -3,13 +3,12 @@ import { AnimalCategoryModel } from "../animal-category.model";
 import { AnimalCategory } from "../../../../domain/animal-category.aggregate";
 
 describe("AnimalCategoryModel Integration Tests", () => {
+  let sequelize = new Sequelize({
+    dialect: "sqlite",
+    storage: ":memory:",
+    models: [AnimalCategoryModel],
+  });
   it("should create a new animal category", async () => {
-    const sequelize = new Sequelize({
-      dialect: "sqlite",
-      storage: ":memory:",
-      models: [AnimalCategoryModel],
-    });
-
     await sequelize.sync({ force: true });
 
     const animalCategory = AnimalCategory.fake().aAnimalCategory().build();
