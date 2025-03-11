@@ -1,5 +1,5 @@
-import { AnimalCategory } from "../../domain/animal-category.aggregate";
-import { Gender } from "../../domain/animal.aggregate";
+import { AnimalCategory } from "../../../domain/animal-category.aggregate";
+import { Gender } from "../../../domain/animal.aggregate";
 import { AnimalCategoryInMemoryRepository } from "./animal-category-in-memory.repository";
 
 describe("AnimalCategoryInMemoryRepository", () => {

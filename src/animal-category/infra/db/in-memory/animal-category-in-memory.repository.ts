@@ -1,7 +1,7 @@
-import { InMemorySearchableRepository } from "../../../shared/infra/db/in-memory/in-memory.repository";
-import { Uuid } from "../../../shared/domain/value-objects/uuid.vo";
-import { AnimalCategory } from "../../domain/animal-category.aggregate";
-import type { SortDirection } from "../../../shared/domain/repository/search-params";
+import { InMemorySearchableRepository } from "../../../../shared/infra/db/in-memory/in-memory.repository";
+import { Uuid } from "../../../../shared/domain/value-objects/uuid.vo";
+import { AnimalCategory } from "../../../domain/animal-category.aggregate";
+import type { SortDirection } from "../../../../shared/domain/repository/search-params";
 
 export class AnimalCategoryInMemoryRepository extends InMemorySearchableRepository<
   AnimalCategory,
