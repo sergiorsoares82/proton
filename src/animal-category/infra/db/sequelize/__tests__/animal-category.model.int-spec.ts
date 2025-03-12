@@ -1,17 +1,100 @@
-import { Sequelize } from "sequelize-typescript";
+import { DataType, Sequelize } from "sequelize-typescript";
 import { AnimalCategoryModel } from "../animal-category.model";
 import { AnimalCategory } from "../../../../domain/animal-category.aggregate";
+import { Uuid } from "../../../../../shared/domain/value-objects/uuid.vo";
+import { Gender } from "../../../../domain/animal.aggregate";
 
 describe("AnimalCategoryModel Integration Tests", () => {
-  let sequelize = new Sequelize({
-    dialect: "sqlite",
-    storage: ":memory:",
-    models: [AnimalCategoryModel],
-  });
-  it("should create a new animal category", async () => {
-    await sequelize.sync({ force: true });
+  let sequelize: Sequelize;
 
-    const animalCategory = AnimalCategory.fake().aAnimalCategory().build();
+  beforeEach(async () => {
+    sequelize = new Sequelize({
+      dialect: "sqlite",
+      storage: ":memory:",
+      models: [AnimalCategoryModel],
+      logging: false,
+    });
+
+    await sequelize.sync({ force: true });
+  });
+
+  describe("mapping props", () => {
+    let attributesMap: Record<string, any>;
+    let attributes: string[];
+
+    beforeEach(() => {
+      attributesMap = AnimalCategoryModel.getAttributes();
+      attributes = Object.keys(attributesMap);
+    });
+    it("should have props mapped correctly", async () => {
+      expect(attributes).toStrictEqual([
+        "animalCategoryId",
+        "name",
+        "gender",
+        "isActive",
+        "createdAt",
+      ]);
+    });
+
+    it("should map animalCategoryId as primary key", async () => {
+      const animalCategoryIdAttribute = attributesMap.animalCategoryId;
+      expect(animalCategoryIdAttribute).toMatchObject({
+        field: "animalCategoryId",
+        fieldName: "animalCategoryId",
+        primaryKey: true,
+        type: DataType.UUID(),
+      });
+    });
+
+    it("should map name", async () => {
+      const nameAttribute = attributesMap.name;
+      expect(nameAttribute).toMatchObject({
+        field: "name",
+        fieldName: "name",
+        type: DataType.STRING(255),
+        allowNull: false,
+      });
+    });
+
+    it("should map gender", async () => {
+      const genderAttribute = attributesMap.gender;
+      expect(genderAttribute).toMatchObject({
+        field: "gender",
+        fieldName: "gender",
+        type: DataType.ENUM("M", "F"),
+        allowNull: false,
+      });
+    });
+
+    it("should map isActive", async () => {
+      const isActiveAttribute = attributesMap.isActive;
+      expect(isActiveAttribute).toMatchObject({
+        field: "isActive",
+        fieldName: "isActive",
+        type: DataType.BOOLEAN(),
+        allowNull: false,
+      });
+    });
+
+    it("should map createdAt", async () => {
+      const createdAtAttribute = attributesMap.createdAt;
+      expect(createdAtAttribute).toMatchObject({
+        field: "createdAt",
+        fieldName: "createdAt",
+        type: DataType.DATE(3),
+        allowNull: false,
+      });
+    });
+  });
+
+  it("should create a new animal category", async () => {
+    const animalCategory = {
+      animalCategoryId: new Uuid().id,
+      name: "test",
+      gender: Gender.FEMALE,
+      isActive: true,
+      createdAt: new Date(),
+    };
 
     const created = await AnimalCategoryModel.create({
       animalCategoryId: animalCategory.animalCategoryId,
@@ -20,5 +103,7 @@ describe("AnimalCategoryModel Integration Tests", () => {
       isActive: animalCategory.isActive,
       createdAt: animalCategory.createdAt,
     });
+
+    expect(created.toJSON()).toStrictEqual(animalCategory);
   });
 });

@@ -2,16 +2,20 @@ import { InMemorySearchableRepository } from "../../../../shared/infra/db/in-mem
 import { Uuid } from "../../../../shared/domain/value-objects/uuid.vo";
 import { AnimalCategory } from "../../../domain/animal-category.aggregate";
 import type { SortDirection } from "../../../../shared/domain/repository/search-params";
+import type {
+  AnimalCategoryFilter,
+  IAnimalCategoryRepository,
+} from "../../../domain/animal-category.repository";
 
-export class AnimalCategoryInMemoryRepository extends InMemorySearchableRepository<
-  AnimalCategory,
-  Uuid
-> {
+export class AnimalCategoryInMemoryRepository
+  extends InMemorySearchableRepository<AnimalCategory, Uuid>
+  implements IAnimalCategoryRepository
+{
   sortableFields: string[] = ["name", "createdAt"];
 
   protected async applyFilter(
     items: AnimalCategory[],
-    filter: string
+    filter: AnimalCategoryFilter
   ): Promise<AnimalCategory[]> {
     if (!filter) {
       return items;
