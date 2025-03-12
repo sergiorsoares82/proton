@@ -5,7 +5,9 @@ import { Gender } from "./animal.aggregate";
 
 type PropOrFactory<T> = T | ((index: number) => T);
 
-export class AnimalCategoryFakeBuilder<TBuild = any> {
+export class AnimalCategoryFakeBuilder<
+  TBuild extends AnimalCategory | AnimalCategory[] = AnimalCategory,
+> {
   // auto generated in entity
   private _animalCategoryId: PropOrFactory<Uuid> | undefined = undefined;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -88,9 +90,9 @@ export class AnimalCategoryFakeBuilder<TBuild = any> {
         //animalcategory.validate();
         return animalCategory;
       });
-    return this.countObjs === 1
-      ? (animalCategories[0] as any)
-      : animalCategories;
+    return (
+      this.countObjs === 1 ? animalCategories[0] : animalCategories
+    ) as TBuild;
   }
 
   get animalCategoryId() {

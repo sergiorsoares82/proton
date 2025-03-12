@@ -77,6 +77,7 @@ export class AnimalCategory extends Entity {
       name: this.name,
       gender: this.gender,
       isActive: this.isActive,
+      createdAt: this.createdAt,
     };
   }
 }

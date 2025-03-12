@@ -71,6 +71,10 @@ export class AnimalCategorySequelizeRepository
 
   async findById(entityId: Uuid): Promise<AnimalCategory> {
     const model = await this.animalCategoryModel.findByPk(entityId.id);
+
+    if (!model) {
+      return null;
+    }
     return new AnimalCategory({
       animalCategoryId: new Uuid(model.animalCategoryId),
       name: model.name,
@@ -80,8 +84,17 @@ export class AnimalCategorySequelizeRepository
     });
   }
 
-  findAll(): Promise<AnimalCategory[]> {
-    throw new Error("Method not implemented.");
+  async findAll(): Promise<AnimalCategory[]> {
+    const models = await this.animalCategoryModel.findAll();
+    return models.map((model) => {
+      return new AnimalCategory({
+        animalCategoryId: new Uuid(model.animalCategoryId),
+        name: model.name,
+        gender: model.gender,
+        isActive: model.isActive,
+        createdAt: model.createdAt,
+      });
+    });
   }
 
   async search(

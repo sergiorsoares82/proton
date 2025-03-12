@@ -182,8 +182,8 @@ describe("AnimalCategoryFakerBuilder Unit Tests", () => {
     test("should pass index to createdAt factory", () => {
       const date = new Date();
       faker.withCreatedAt((index) => new Date(date.getTime() + index + 2));
-      const animalCategory = faker.build();
-      expect(animalCategory.createdAt.getTime()).toBe(date.getTime() + 2);
+      const category = faker.build();
+      expect(category.createdAt.getTime()).toBe(date.getTime() + 2);
 
       const fakerMany = AnimalCategoryFakeBuilder.theCategories(2);
       fakerMany.withCreatedAt((index) => new Date(date.getTime() + index + 2));
@@ -218,7 +218,7 @@ describe("AnimalCategoryFakerBuilder Unit Tests", () => {
     expect(animalCategory.name).toBe("name test");
     expect(animalCategory.gender).toBe("M");
     expect(animalCategory.isActive).toBe(false);
-    expect(animalCategory.createdAt).toBe(createdAt);
+    expect(animalCategory.createdAt).toStrictEqual(createdAt);
   });
 
   test("should create many categories", () => {
@@ -248,7 +248,7 @@ describe("AnimalCategoryFakerBuilder Unit Tests", () => {
       expect(animalCategory.name).toBe("name test");
       expect(animalCategory.gender).toBe("M");
       expect(animalCategory.isActive).toBe(false);
-      expect(animalCategory.createdAt).toBe(createdAt);
+      expect(animalCategory.createdAt).toStrictEqual(createdAt);
     });
   });
 });

@@ -31,9 +31,10 @@ export class AnimalCategoryInMemoryRepository
     sort: string | null,
     sort_dir: SortDirection | null
   ) {
-    return sort
+    const sortedItems = sort
       ? super.applySort(items, sort, sort_dir)
       : super.applySort(items, "createdAt", "desc");
+    return sortedItems;
   }
 
   getEntity(): new (...args: any[]) => AnimalCategory {

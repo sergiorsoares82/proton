@@ -1,6 +1,6 @@
-import { AnimalCategory } from "../../../domain/animal-category.aggregate";
-import { Gender } from "../../../domain/animal.aggregate";
-import { AnimalCategoryInMemoryRepository } from "./animal-category-in-memory.repository";
+import { AnimalCategory } from "../../../../domain/animal-category.aggregate";
+import { Gender } from "../../../../domain/animal.aggregate";
+import { AnimalCategoryInMemoryRepository } from "../animal-category-in-memory.repository";
 
 describe("AnimalCategoryInMemoryRepository", () => {
   let repository: AnimalCategoryInMemoryRepository;
@@ -35,17 +35,17 @@ describe("AnimalCategoryInMemoryRepository", () => {
       AnimalCategory.fake()
         .aAnimalCategory()
         .withName("test")
-        .withCreatedAt(created_at)
-        .build(),
-      AnimalCategory.fake()
-        .aAnimalCategory()
-        .withName("TEST")
         .withCreatedAt(new Date(created_at.getTime() + 100))
         .build(),
       AnimalCategory.fake()
         .aAnimalCategory()
-        .withName("fake")
+        .withName("TEST")
         .withCreatedAt(new Date(created_at.getTime() + 200))
+        .build(),
+      AnimalCategory.fake()
+        .aAnimalCategory()
+        .withName("fake")
+        .withCreatedAt(new Date(created_at.getTime() + 300))
         .build(),
     ];
 

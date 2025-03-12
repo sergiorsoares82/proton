@@ -1,7 +1,7 @@
-import { EntityValidationError } from "../../shared/domain/validators/validation.error";
-import { Uuid } from "../../shared/domain/value-objects/uuid.vo";
-import { AnimalCategory } from "./animal-category.aggregate";
-import { Gender } from "./animal.aggregate";
+import { EntityValidationError } from "../../../shared/domain/validators/validation.error";
+import { Uuid } from "../../../shared/domain/value-objects/uuid.vo";
+import { AnimalCategory } from "../animal-category.aggregate";
+import { Gender } from "../animal.aggregate";
 
 describe("AnimalCategoryAggregate Unit Tests", () => {
   let validateSpy: any;
@@ -96,6 +96,7 @@ describe("AnimalCategoryAggregate Unit Tests", () => {
         name: "calf",
         gender: "F",
         isActive: true,
+        createdAt: animalCategory.createdAt,
       });
     });
   });
