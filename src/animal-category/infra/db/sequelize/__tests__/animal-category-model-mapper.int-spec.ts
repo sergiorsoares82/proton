@@ -5,20 +5,10 @@ import { EntityValidationError } from "../../../../../shared/domain/validators/v
 import { Gender } from "../../../../domain/animal.aggregate";
 import { Uuid } from "../../../../../shared/domain/value-objects/uuid.vo";
 import { AnimalCategory } from "../../../../domain/animal-category.aggregate";
+import { setupSequelize } from "../../../../../shared/infra/testing/helpers";
 
 describe("AnimalCategory Model Mapper integration Tests", () => {
-  let sequelize: Sequelize;
-
-  beforeEach(async () => {
-    sequelize = new Sequelize({
-      dialect: "sqlite",
-      storage: ":memory:",
-      models: [AnimalCategoryModel],
-      logging: false,
-    });
-
-    await sequelize.sync({ force: true });
-  });
+  setupSequelize({ models: [AnimalCategoryModel] });
 
   it("should throw an error when animal category is invalid", async () => {
     const model = AnimalCategoryModel.build({

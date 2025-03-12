@@ -9,20 +9,15 @@ import {
   AnimalCategorySearchParams,
   AnimalCategorySearchResult,
 } from "../../../../domain/animal-category.repository";
-import { Gender } from "../../../../domain/animal.aggregate";
+import { setupSequelize } from "../../../../../shared/infra/testing/helpers";
 
 describe("AnimalCategorySequelizeRepository Integration Tests", () => {
   let sequelize: Sequelize;
   let repository: AnimalCategorySequelizeRepository;
 
+  setupSequelize({ models: [AnimalCategoryModel] });
+
   beforeEach(async () => {
-    sequelize = new Sequelize({
-      dialect: "sqlite",
-      storage: ":memory:",
-      models: [AnimalCategoryModel],
-      logging: false,
-    });
-    await sequelize.sync({ force: true });
     repository = new AnimalCategorySequelizeRepository(AnimalCategoryModel);
   });
 

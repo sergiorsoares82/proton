@@ -3,20 +3,10 @@ import { Uuid } from "../../../../../shared/domain/value-objects/uuid.vo";
 import { Gender } from "../../../../domain/animal.aggregate";
 import { AnimalCategoryModel } from "../animal-category.model";
 import { Config } from "../../../../../shared/infra/config";
+import { setupSequelize } from "../../../../../shared/infra/testing/helpers";
 
 describe("AnimalCategoryModel Integration Tests", () => {
-  let sequelize: Sequelize;
-
-  beforeEach(async () => {
-    sequelize = new Sequelize({
-      dialect: "sqlite",
-      storage: ":memory:",
-      models: [AnimalCategoryModel],
-      logging: false,
-    });
-
-    await sequelize.sync({ force: true });
-  });
+  setupSequelize({ models: [AnimalCategoryModel] });
 
   describe("mapping props", () => {
     let attributesMap: Record<string, any>;
