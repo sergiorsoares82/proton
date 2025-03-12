@@ -7,7 +7,7 @@ import {
   AnimalCategorySearchResult,
   IAnimalCategoryRepository,
 } from "../../../domain/animal-category.repository";
-import type { AnimalCategoryModel } from "./animal-category.model";
+import { AnimalCategoryModel } from "./animal-category.model";
 import { AnimalCategoryModelMapper } from "./animal-category-model.mapper";
 
 export class AnimalCategorySequelizeRepository
@@ -71,6 +71,14 @@ export class AnimalCategorySequelizeRepository
   ): Promise<AnimalCategorySearchResult> {
     const offset = (props.page - 1) * props.per_page;
     const limit = props.per_page;
+    console.log("props", props);
+    console.log({
+      ...(props.filter && {
+        where: {
+          name: { [Op.like]: `%${props.filter}%` },
+        },
+      }),
+    });
     const { rows: models, count } =
       await this.animalCategoryModel.findAndCountAll({
         ...(props.filter && {
@@ -80,19 +88,13 @@ export class AnimalCategorySequelizeRepository
         }),
         ...(props.sort && this.sortableFields.includes(props.sort)
           ? { order: [[props.sort, props.sort_dir]] }
-          : { order: [["created_at", "desc"]] }),
+          : { order: [["createdAt", "desc"]] }),
         offset,
         limit,
       });
     return new AnimalCategorySearchResult({
       items: models.map((model) => {
-        return new AnimalCategory({
-          animalCategoryId: new Uuid(model.animalCategoryId),
-          name: model.name,
-          gender: model.gender,
-          isActive: model.isActive,
-          createdAt: model.createdAt,
-        });
+        return AnimalCategoryModelMapper.toEntity(model);
       }),
       current_page: props.page,
       per_page: props.per_page,
