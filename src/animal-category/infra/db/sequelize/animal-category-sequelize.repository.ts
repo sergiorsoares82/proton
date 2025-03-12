@@ -8,6 +8,7 @@ import {
   IAnimalCategoryRepository,
 } from "../../../domain/animal-category.repository";
 import type { AnimalCategoryModel } from "./animal-category.model";
+import { AnimalCategoryModelMapper } from "./animal-category-model.mapper";
 
 export class AnimalCategorySequelizeRepository
   implements IAnimalCategoryRepository
@@ -17,25 +18,15 @@ export class AnimalCategorySequelizeRepository
   constructor(private animalCategoryModel: typeof AnimalCategoryModel) {}
 
   async insert(entity: AnimalCategory): Promise<void> {
-    await this.animalCategoryModel.create({
-      animalCategoryId: entity.animalCategoryId.id,
-      name: entity.name,
-      gender: entity.gender,
-      isActive: entity.isActive,
-      createdAt: entity.createdAt,
-    });
+    const model = AnimalCategoryModelMapper.toModel(entity).toJSON();
+    await this.animalCategoryModel.create(model);
   }
 
   async bulkInsert(entities: AnimalCategory[]): Promise<void> {
-    await this.animalCategoryModel.bulkCreate(
-      entities.map((entity) => ({
-        animalCategoryId: entity.animalCategoryId.id,
-        name: entity.name,
-        gender: entity.gender,
-        isActive: entity.isActive,
-        createdAt: entity.createdAt,
-      }))
-    );
+    const models = entities.map((entity) => {
+      return AnimalCategoryModelMapper.toModel(entity).toJSON();
+    });
+    await this.animalCategoryModel.bulkCreate(models);
   }
 
   async update(entity: AnimalCategory): Promise<void> {
@@ -46,16 +37,9 @@ export class AnimalCategorySequelizeRepository
       throw new NotFoundError(id, this.getEntity());
     }
 
-    await model.update(
-      {
-        animalCategoryId: entity.animalCategoryId.id,
-        name: entity.name,
-        gender: entity.gender,
-        isActive: entity.isActive,
-        createdAt: entity.createdAt,
-      },
-      { where: { animalCategoryId: id } }
-    );
+    const modelToUpdate = AnimalCategoryModelMapper.toModel(entity).toJSON();
+
+    await model.update(modelToUpdate, { where: { animalCategoryId: id } });
   }
 
   async delete(entityId: Uuid): Promise<void> {
@@ -72,28 +56,13 @@ export class AnimalCategorySequelizeRepository
   async findById(entityId: Uuid): Promise<AnimalCategory> {
     const model = await this.animalCategoryModel.findByPk(entityId.id);
 
-    if (!model) {
-      return null;
-    }
-    return new AnimalCategory({
-      animalCategoryId: new Uuid(model.animalCategoryId),
-      name: model.name,
-      gender: model.gender,
-      isActive: model.isActive,
-      createdAt: model.createdAt,
-    });
+    return model ? AnimalCategoryModelMapper.toEntity(model) : null;
   }
 
   async findAll(): Promise<AnimalCategory[]> {
     const models = await this.animalCategoryModel.findAll();
     return models.map((model) => {
-      return new AnimalCategory({
-        animalCategoryId: new Uuid(model.animalCategoryId),
-        name: model.name,
-        gender: model.gender,
-        isActive: model.isActive,
-        createdAt: model.createdAt,
-      });
+      return AnimalCategoryModelMapper.toEntity(model);
     });
   }
 
