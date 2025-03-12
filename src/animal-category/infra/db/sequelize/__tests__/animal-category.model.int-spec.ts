@@ -1,8 +1,8 @@
 import { DataType, Sequelize } from "sequelize-typescript";
-import { AnimalCategoryModel } from "../animal-category.model";
-import { AnimalCategory } from "../../../../domain/animal-category.aggregate";
 import { Uuid } from "../../../../../shared/domain/value-objects/uuid.vo";
 import { Gender } from "../../../../domain/animal.aggregate";
+import { AnimalCategoryModel } from "../animal-category.model";
+import { Config } from "../../../../../shared/infra/config";
 
 describe("AnimalCategoryModel Integration Tests", () => {
   let sequelize: Sequelize;
