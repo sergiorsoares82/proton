@@ -47,6 +47,11 @@ export class AnimalCategory extends Entity {
     AnimalCategory.validate(this);
   }
 
+  changeGender(gender: Gender): void {
+    this.gender = gender;
+    AnimalCategory.validate(this);
+  }
+
   activate(): void {
     this.isActive = true;
   }
