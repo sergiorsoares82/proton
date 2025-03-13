@@ -47,7 +47,7 @@ export class UpdateAnimalCategoryUseCase
 export type UpdateAnimalCategoryInput = {
   animalCategoryId: string;
   name?: string;
-  gender: Gender;
+  gender?: Gender;
   isActive?: boolean;
 };
 
