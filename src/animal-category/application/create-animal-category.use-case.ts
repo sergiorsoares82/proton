@@ -28,7 +28,7 @@ export class CreateAnimalCategoryUseCase
 export type CreateAnimalCategoryInput = {
   name: string;
   gender: Gender;
-  isActive: boolean;
+  isActive?: boolean;
 };
 
 export type CreateAnimalCategoryOutput = {
