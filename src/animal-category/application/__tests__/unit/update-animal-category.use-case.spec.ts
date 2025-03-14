@@ -14,8 +14,6 @@ describe("Update Animal Category Use Case Unit Test", () => {
   let useCase: UpdateAnimalCategoryUseCase;
   let repository: AnimalCategoryInMemoryRepository;
 
-  setupSequelize({ models: [AnimalCategoryModel] });
-
   beforeEach(() => {
     repository = new AnimalCategoryInMemoryRepository();
     useCase = new UpdateAnimalCategoryUseCase(repository);

@@ -8,18 +8,19 @@ import { AnimalCategory } from "../../../domain/animal-category.aggregate";
 import { Gender } from "../../../domain/animal.aggregate";
 import { AnimalCategoryInMemoryRepository } from "../../../infra/db/in-memory/animal-category-in-memory.repository";
 import { AnimalCategoryModel } from "../../../infra/db/sequelize/animal-category.model";
-import { DeleteAnimalCategoryUseCase } from "../../delete-animal-category.use-case";
+import { GetAnimalCategoryUseCase } from "../../get-animal-category.use-case";
+import { UpdateAnimalCategoryUseCase } from "../../update-animal-category.use-case";
 
-describe("Delete Animal Category Use Case Unit Test", () => {
-  let useCase: DeleteAnimalCategoryUseCase;
+describe("Get Animal Category Use Case Unit Test", () => {
+  let useCase: GetAnimalCategoryUseCase;
   let repository: AnimalCategoryInMemoryRepository;
 
   beforeEach(() => {
     repository = new AnimalCategoryInMemoryRepository();
-    useCase = new DeleteAnimalCategoryUseCase(repository);
+    useCase = new GetAnimalCategoryUseCase(repository);
   });
 
-  it("should throw an error on delete when animal category is not found", async () => {
+  it("should throw an error when animal category is not found", async () => {
     await expect(() =>
       useCase.execute({ animalCategoryId: "fake id" })
     ).rejects.toThrow(new InvalidUuidError());
@@ -31,14 +32,22 @@ describe("Delete Animal Category Use Case Unit Test", () => {
     ).rejects.toThrow(new NotFoundError(uuid.id, AnimalCategory));
   });
 
-  it("should delte an animal category", async () => {
+  it("should get an animal category", async () => {
     const items = [
-      new AnimalCategory({ name: "test 1", gender: Gender.FEMALE }),
+      AnimalCategory.create({ name: "Movie", gender: Gender.FEMALE }),
     ];
     repository.items = items;
-    await useCase.execute({
+    const spyFindById = jest.spyOn(repository, "findById");
+    const output = await useCase.execute({
       animalCategoryId: items[0].animalCategoryId.id,
     });
-    expect(repository.items).toHaveLength(0);
+    expect(spyFindById).toHaveBeenCalledTimes(1);
+    expect(output).toStrictEqual({
+      animalCategoryId: items[0].animalCategoryId.id,
+      name: "Movie",
+      gender: Gender.FEMALE,
+      isActive: true,
+      createdAt: items[0].createdAt,
+    });
   });
 });
