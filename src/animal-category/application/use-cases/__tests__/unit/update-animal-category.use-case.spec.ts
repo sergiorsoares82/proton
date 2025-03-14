@@ -1,13 +1,13 @@
-import { NotFoundError } from "../../../../shared/domain/errors/not-found.error";
+import { NotFoundError } from "../../../../../shared/domain/errors/not-found.error";
 import {
   InvalidUuidError,
   Uuid,
-} from "../../../../shared/domain/value-objects/uuid.vo";
-import { setupSequelize } from "../../../../shared/infra/testing/helpers";
-import { AnimalCategory } from "../../../domain/animal-category.aggregate";
-import { Gender } from "../../../domain/animal.aggregate";
-import { AnimalCategoryInMemoryRepository } from "../../../infra/db/in-memory/animal-category-in-memory.repository";
-import { AnimalCategoryModel } from "../../../infra/db/sequelize/animal-category.model";
+} from "../../../../../shared/domain/value-objects/uuid.vo";
+import { setupSequelize } from "../../../../../shared/infra/testing/helpers";
+import { AnimalCategory } from "../../../../domain/animal-category.aggregate";
+import { Gender } from "../../../../domain/animal.aggregate";
+import { AnimalCategoryInMemoryRepository } from "../../../../infra/db/in-memory/animal-category-in-memory.repository";
+import { AnimalCategoryModel } from "../../../../infra/db/sequelize/animal-category.model";
 import { UpdateAnimalCategoryUseCase } from "../../update-animal-category.use-case";
 
 describe("Update Animal Category Use Case Unit Test", () => {

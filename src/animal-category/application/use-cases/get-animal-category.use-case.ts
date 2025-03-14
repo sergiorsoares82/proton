@@ -1,9 +1,10 @@
-import type { IUseCase } from "../../shared/application/use-case.interface";
-import { NotFoundError } from "../../shared/domain/errors/not-found.error";
-import { Uuid } from "../../shared/domain/value-objects/uuid.vo";
-import { AnimalCategory } from "../domain/animal-category.aggregate";
-import type { IAnimalCategoryRepository } from "../domain/animal-category.repository";
-import type { Gender } from "../domain/animal.aggregate";
+import type { IUseCase } from "../../../shared/application/use-case.interface";
+import { NotFoundError } from "../../../shared/domain/errors/not-found.error";
+import { Uuid } from "../../../shared/domain/value-objects/uuid.vo";
+import { AnimalCategory } from "../../domain/animal-category.aggregate";
+import type { IAnimalCategoryRepository } from "../../domain/animal-category.repository";
+import type { Gender } from "../../domain/animal.aggregate";
+import { AnimalCategoryOutputMapper } from "./common/animal-category.output";
 
 export class GetAnimalCategoryUseCase
   implements IUseCase<GetAnimalCategoryInput, GetAnimalCategoryOutput>
@@ -21,13 +22,7 @@ export class GetAnimalCategoryUseCase
       throw new NotFoundError(input.animalCategoryId, AnimalCategory);
     }
 
-    return {
-      animalCategoryId: category.animalCategoryId.id,
-      name: category.name,
-      gender: category.gender,
-      isActive: category.isActive,
-      createdAt: category.createdAt,
-    };
+    return AnimalCategoryOutputMapper.toOutput(category);
   }
 }
 
