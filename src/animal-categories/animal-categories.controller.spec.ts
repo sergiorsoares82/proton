@@ -13,7 +13,11 @@ describe('AnimalCategoriesController', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [ConfigModule.forRoot(), DatabaseModule, AnimalCategoriesModule], // ✅ Ensure module is imported
+      imports: [
+        ConfigModule.forRoot({}),
+        DatabaseModule,
+        AnimalCategoriesModule,
+      ],
     }).compile();
 
     controller = module.get<AnimalCategoriesController>(
