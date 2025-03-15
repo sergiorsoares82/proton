@@ -6,8 +6,7 @@ import { Gender } from "../../../../domain/animal.aggregate";
 import { AnimalCategorySequelizeRepository } from "../../../../infra/db/sequelize/animal-category-sequelize.repository";
 import { AnimalCategoryModel } from "../../../../infra/db/sequelize/animal-category.model";
 import { AnimalCategoryOutputMapper } from "../../common/animal-category.output";
-import { ListAnimalCategoriesUseCase } from "../../list-animal-categories.use-case";
-import { UpdateAnimalCategoryUseCase } from "../../update-animal-category.use-case";
+import { ListAnimalCategoriesUseCase } from "../list-animal-categories.use-case";
 
 describe("List Animal Categories Use Case Integration Tests", () => {
   let useCase: ListAnimalCategoriesUseCase;

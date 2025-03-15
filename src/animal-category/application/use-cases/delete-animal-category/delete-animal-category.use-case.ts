@@ -1,6 +1,6 @@
-import type { IUseCase } from "../../../shared/application/use-case.interface";
-import { Uuid } from "../../../shared/domain/value-objects/uuid.vo";
-import type { IAnimalCategoryRepository } from "../../domain/animal-category.repository";
+import type { IUseCase } from "../../../../shared/application/use-case.interface";
+import { Uuid } from "../../../../shared/domain/value-objects/uuid.vo";
+import type { IAnimalCategoryRepository } from "../../../domain/animal-category.repository";
 
 export class DeleteAnimalCategoryUseCase
   implements IUseCase<DeleteAnimalCategoryInput, DeleteAnimalCategoryOutput>

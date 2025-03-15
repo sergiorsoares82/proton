@@ -1,8 +1,8 @@
-import type { IUseCase } from "../../../shared/application/use-case.interface";
-import { AnimalCategory } from "../../domain/animal-category.aggregate";
-import type { IAnimalCategoryRepository } from "../../domain/animal-category.repository";
-import type { Gender } from "../../domain/animal.aggregate";
-import { AnimalCategoryOutputMapper } from "./common/animal-category.output";
+import type { IUseCase } from "../../../../shared/application/use-case.interface";
+import { AnimalCategory } from "../../../domain/animal-category.aggregate";
+import type { IAnimalCategoryRepository } from "../../../domain/animal-category.repository";
+import type { Gender } from "../../../domain/animal.aggregate";
+import { AnimalCategoryOutputMapper } from "../common/animal-category.output";
 
 export class CreateAnimalCategoryUseCase
   implements IUseCase<CreateAnimalCategoryInput, CreateAnimalCategoryOutput>

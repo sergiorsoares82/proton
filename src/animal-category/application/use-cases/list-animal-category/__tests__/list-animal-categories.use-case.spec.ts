@@ -1,15 +1,9 @@
-import { NotFoundError } from "../../../../../shared/domain/errors/not-found.error";
-import {
-  InvalidUuidError,
-  Uuid,
-} from "../../../../../shared/domain/value-objects/uuid.vo";
 import { AnimalCategory } from "../../../../domain/animal-category.aggregate";
 import { AnimalCategorySearchResult } from "../../../../domain/animal-category.repository";
 import { Gender } from "../../../../domain/animal.aggregate";
 import { AnimalCategoryInMemoryRepository } from "../../../../infra/db/in-memory/animal-category-in-memory.repository";
 import { AnimalCategoryOutputMapper } from "../../common/animal-category.output";
-import { ListAnimalCategoriesUseCase } from "../../list-animal-categories.use-case";
-import { UpdateAnimalCategoryUseCase } from "../../update-animal-category.use-case";
+import { ListAnimalCategoriesUseCase } from "../list-animal-categories.use-case";
 
 describe("List Animal Categories Use Case Unit Test", () => {
   let useCase: ListAnimalCategoriesUseCase;

@@ -8,7 +8,7 @@ import { AnimalCategory } from "../../../../domain/animal-category.aggregate";
 import { Gender } from "../../../../domain/animal.aggregate";
 import { AnimalCategoryInMemoryRepository } from "../../../../infra/db/in-memory/animal-category-in-memory.repository";
 import { AnimalCategoryModel } from "../../../../infra/db/sequelize/animal-category.model";
-import { UpdateAnimalCategoryUseCase } from "../../update-animal-category.use-case";
+import { UpdateAnimalCategoryUseCase } from "../update-animal-category.use-case";
 
 describe("Update Animal Category Use Case Unit Test", () => {
   let useCase: UpdateAnimalCategoryUseCase;

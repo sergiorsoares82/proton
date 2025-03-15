@@ -7,8 +7,7 @@ import { setupSequelize } from "../../../../../shared/infra/testing/helpers";
 import { AnimalCategory } from "../../../../domain/animal-category.aggregate";
 import { Gender } from "../../../../domain/animal.aggregate";
 import { AnimalCategoryInMemoryRepository } from "../../../../infra/db/in-memory/animal-category-in-memory.repository";
-import { AnimalCategoryModel } from "../../../../infra/db/sequelize/animal-category.model";
-import { DeleteAnimalCategoryUseCase } from "../../delete-animal-category.use-case";
+import { DeleteAnimalCategoryUseCase } from "../delete-animal-category.use-case";
 
 describe("Delete Animal Category Use Case Unit Test", () => {
   let useCase: DeleteAnimalCategoryUseCase;

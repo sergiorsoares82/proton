@@ -1,19 +1,19 @@
 import {
   PaginationOutputMapper,
   type PaginationOutput,
-} from "../../../shared/application/pagination-output";
-import type { IUseCase } from "../../../shared/application/use-case.interface";
-import type { SortDirection } from "../../../shared/domain/repository/search-params";
+} from "../../../../shared/application/pagination-output";
+import type { IUseCase } from "../../../../shared/application/use-case.interface";
+import type { SortDirection } from "../../../../shared/domain/repository/search-params";
 import {
   AnimalCategorySearchParams,
   type AnimalCategoryFilter,
   type AnimalCategorySearchResult,
   type IAnimalCategoryRepository,
-} from "../../domain/animal-category.repository";
+} from "../../../domain/animal-category.repository";
 import {
   AnimalCategoryOutputMapper,
   type AnimalCategoryOutput,
-} from "./common/animal-category.output";
+} from "../common/animal-category.output";
 
 export class ListAnimalCategoriesUseCase
   implements

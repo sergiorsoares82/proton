@@ -1,10 +1,9 @@
 import { Uuid } from "../../../../../shared/domain/value-objects/uuid.vo";
 import { setupSequelize } from "../../../../../shared/infra/testing/helpers";
 import { Gender } from "../../../../domain/animal.aggregate";
-import { AnimalCategoryInMemoryRepository } from "../../../../infra/db/in-memory/animal-category-in-memory.repository";
 import { AnimalCategorySequelizeRepository } from "../../../../infra/db/sequelize/animal-category-sequelize.repository";
 import { AnimalCategoryModel } from "../../../../infra/db/sequelize/animal-category.model";
-import { CreateAnimalCategoryUseCase } from "../../create-animal-category.use-case";
+import { CreateAnimalCategoryUseCase } from "../create-animal-category.use-case";
 
 describe("Create Animal Category Use Case Integration Tests", () => {
   let useCase: CreateAnimalCategoryUseCase;

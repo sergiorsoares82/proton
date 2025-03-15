@@ -3,22 +3,17 @@ import {
   InvalidUuidError,
   Uuid,
 } from "../../../../../shared/domain/value-objects/uuid.vo";
-import { setupSequelize } from "../../../../../shared/infra/testing/helpers";
 import { AnimalCategory } from "../../../../domain/animal-category.aggregate";
 import { Gender } from "../../../../domain/animal.aggregate";
 import { AnimalCategoryInMemoryRepository } from "../../../../infra/db/in-memory/animal-category-in-memory.repository";
-import { AnimalCategorySequelizeRepository } from "../../../../infra/db/sequelize/animal-category-sequelize.repository";
-import { AnimalCategoryModel } from "../../../../infra/db/sequelize/animal-category.model";
-import { GetAnimalCategoryUseCase } from "../../get-animal-category.use-case";
+import { GetAnimalCategoryUseCase } from "../get-animal-category.use-case";
 
-describe("Get Animal Category Use Case Integration Test", () => {
+describe("Get Animal Category Use Case Unit Test", () => {
   let useCase: GetAnimalCategoryUseCase;
-  let repository: AnimalCategorySequelizeRepository;
-
-  setupSequelize({ models: [AnimalCategoryModel] });
+  let repository: AnimalCategoryInMemoryRepository;
 
   beforeEach(() => {
-    repository = new AnimalCategorySequelizeRepository(AnimalCategoryModel);
+    repository = new AnimalCategoryInMemoryRepository();
     useCase = new GetAnimalCategoryUseCase(repository);
   });
 
@@ -35,19 +30,21 @@ describe("Get Animal Category Use Case Integration Test", () => {
   });
 
   it("should get an animal category", async () => {
-    const animalCategory = AnimalCategory.fake().aAnimalCategory().build();
-    await repository.insert(animalCategory);
-
+    const items = [
+      AnimalCategory.create({ name: "Movie", gender: Gender.FEMALE }),
+    ];
+    repository.items = items;
+    const spyFindById = jest.spyOn(repository, "findById");
     const output = await useCase.execute({
-      animalCategoryId: animalCategory.animalCategoryId.id,
+      animalCategoryId: items[0].animalCategoryId.id,
     });
-
+    expect(spyFindById).toHaveBeenCalledTimes(1);
     expect(output).toStrictEqual({
-      animalCategoryId: animalCategory.animalCategoryId.id,
-      name: animalCategory.name,
-      gender: animalCategory.gender,
+      animalCategoryId: items[0].animalCategoryId.id,
+      name: "Movie",
+      gender: Gender.FEMALE,
       isActive: true,
-      createdAt: animalCategory.createdAt,
+      createdAt: items[0].createdAt,
     });
   });
 });

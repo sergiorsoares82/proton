@@ -5,7 +5,7 @@ import { AnimalCategory } from "../../../../domain/animal-category.aggregate";
 import { Gender } from "../../../../domain/animal.aggregate";
 import { AnimalCategorySequelizeRepository } from "../../../../infra/db/sequelize/animal-category-sequelize.repository";
 import { AnimalCategoryModel } from "../../../../infra/db/sequelize/animal-category.model";
-import { UpdateAnimalCategoryUseCase } from "../../update-animal-category.use-case";
+import { UpdateAnimalCategoryUseCase } from "../update-animal-category.use-case";
 
 describe("Update Animal Category Use Case Integration Tests", () => {
   let useCase: UpdateAnimalCategoryUseCase;

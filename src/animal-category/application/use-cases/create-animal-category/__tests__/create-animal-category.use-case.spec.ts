@@ -1,6 +1,6 @@
 import { Gender } from "../../../../domain/animal.aggregate";
 import { AnimalCategoryInMemoryRepository } from "../../../../infra/db/in-memory/animal-category-in-memory.repository";
-import { CreateAnimalCategoryUseCase } from "../../create-animal-category.use-case";
+import { CreateAnimalCategoryUseCase } from "../create-animal-category.use-case";
 
 describe("Create Animal Category Use Case Unit Test", () => {
   let useCase: CreateAnimalCategoryUseCase;
