@@ -87,7 +87,7 @@ export class AnimalCategoryFakeBuilder<
             createdAt: this.callFactory(this._createdAt, index),
           }),
         });
-        //animalcategory.validate();
+        animalCategory.validate();
         return animalCategory;
       });
     return (

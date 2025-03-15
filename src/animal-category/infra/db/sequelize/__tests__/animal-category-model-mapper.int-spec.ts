@@ -1,4 +1,3 @@
-import { Sequelize } from "sequelize-typescript";
 import { AnimalCategoryModel } from "../animal-category.model";
 import { AnimalCategoryModelMapper } from "../animal-category-model.mapper";
 import { EntityValidationError } from "../../../../../shared/domain/validators/validation.error";
@@ -11,8 +10,10 @@ describe("AnimalCategory Model Mapper integration Tests", () => {
   setupSequelize({ models: [AnimalCategoryModel] });
 
   it("should throw an error when animal category is invalid", async () => {
+    expect.assertions(2);
     const model = AnimalCategoryModel.build({
       animalCategoryId: "9366b7dc-2d71-4799-b91c-c64adb205104",
+      name: "a".repeat(256),
     });
 
     try {
@@ -22,13 +23,10 @@ describe("AnimalCategory Model Mapper integration Tests", () => {
       );
     } catch (e) {
       expect(e).toBeInstanceOf(EntityValidationError);
-      expect((e as EntityValidationError).error).toMatchObject({
-        name: [
-          "name should not be empty",
-          "name must be a string",
-          "name must be shorter than or equal to 255 characters",
-        ],
-      });
+      expect((e as EntityValidationError).error).toMatchObject([
+        { name: ["name must be shorter than or equal to 255 characters"] },
+        { gender: ["gender must be one of the following values: M, F"] },
+      ]);
     }
   });
 

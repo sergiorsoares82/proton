@@ -1,3 +1,4 @@
+import { EntityValidationError } from "../../../../shared/domain/validators/validation.error";
 import { Uuid } from "../../../../shared/domain/value-objects/uuid.vo";
 import { AnimalCategory } from "../../../domain/animal-category.aggregate";
 import { AnimalCategoryModel } from "./animal-category.model";
@@ -14,7 +15,7 @@ export class AnimalCategoryModelMapper {
   }
 
   static toEntity(model: AnimalCategoryModel): AnimalCategory {
-    const entity = new AnimalCategory({
+    const animalCategory = new AnimalCategory({
       animalCategoryId: new Uuid(model.animalCategoryId),
       name: model.name,
       gender: model.gender,
@@ -22,7 +23,11 @@ export class AnimalCategoryModelMapper {
       createdAt: model.createdAt,
     });
 
-    AnimalCategory.validate(entity);
-    return entity;
+    animalCategory.validate();
+
+    if (animalCategory.notification.hasErrors()) {
+      throw new EntityValidationError(animalCategory.notification.toJSON());
+    }
+    return animalCategory;
   }
 }

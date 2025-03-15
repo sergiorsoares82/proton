@@ -71,14 +71,7 @@ export class AnimalCategorySequelizeRepository
   ): Promise<AnimalCategorySearchResult> {
     const offset = (props.page - 1) * props.per_page;
     const limit = props.per_page;
-    console.log("props", props);
-    console.log({
-      ...(props.filter && {
-        where: {
-          name: { [Op.like]: `%${props.filter}%` },
-        },
-      }),
-    });
+
     const { rows: models, count } =
       await this.animalCategoryModel.findAndCountAll({
         ...(props.filter && {

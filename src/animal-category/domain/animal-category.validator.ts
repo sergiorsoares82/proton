@@ -1,39 +1,33 @@
-import {
-  MaxLength,
-  IsString,
-  IsNotEmpty,
-  IsOptional,
-  IsBoolean,
-  IsEnum,
-} from "class-validator";
+import { IsEnum, MaxLength } from "class-validator";
 import { ClassValidatorFields } from "../../shared/domain/validators/class-validator-fields";
-import { Gender } from "./animal.aggregate";
 import type { AnimalCategory } from "./animal-category.aggregate";
+import { Gender } from "./animal.aggregate";
+import type { Notification } from "../../shared/domain/validators/notification";
 
 export class AnimalCategoryRules {
-  @MaxLength(255)
-  @IsString()
-  @IsNotEmpty()
+  @MaxLength(255, { groups: ["name"] })
   name: string;
 
-  @IsEnum(Gender, { message: "Gender must be either 'M' or 'F'" })
-  @IsNotEmpty()
+  @IsEnum(Gender, {
+    // message: "Gender must be either 'M' or 'F'",
+    groups: ["gender"],
+  })
   gender: Gender;
 
-  @IsBoolean()
-  @IsNotEmpty()
-  isActive: boolean;
-
-  constructor({ name, gender, isActive }: AnimalCategory) {
+  constructor({ name, gender }: AnimalCategory) {
     this.name = name;
     this.gender = gender;
-    this.isActive = isActive;
   }
 }
 
-export class AnimalCategoryValidator extends ClassValidatorFields<AnimalCategoryRules> {
-  validate(entity: AnimalCategory) {
-    return super.validate(new AnimalCategoryRules(entity));
+export class AnimalCategoryValidator extends ClassValidatorFields {
+  validate(notification: Notification, data: any, fields?: string[]): boolean {
+    const newFields = fields?.length ? fields : ["name", "gender"];
+    return super.validate(
+      notification,
+      new AnimalCategoryRules(data),
+      newFields
+    );
   }
 }
 

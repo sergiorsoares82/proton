@@ -4,7 +4,7 @@ import type { ValueObject } from "../../shared/domain/value-object";
 import { Uuid } from "../../shared/domain/value-objects/uuid.vo";
 import { AnimalCategoryFakeBuilder } from "./animal-category-fake.builder";
 import { AnimalCategoryValidatorFactory } from "./animal-category.validator";
-import type { Gender } from "./animal.aggregate";
+import { Gender } from "./animal.aggregate";
 
 type AnimalCategoryConstructorProps = {
   animalCategoryId?: Uuid;
@@ -38,18 +38,18 @@ export class AnimalCategory extends Entity {
 
   static create(props: AnimalCategoryCreateCommand): AnimalCategory {
     const animalCategory = new AnimalCategory(props);
-    AnimalCategory.validate(animalCategory);
+    animalCategory.validate(["name", "gender"]);
     return animalCategory;
   }
 
   changeName(name: string): void {
     this.name = name;
-    AnimalCategory.validate(this);
+    this.validate(["name"]);
   }
 
-  changeGender(gender: Gender): void {
-    this.gender = gender;
-    AnimalCategory.validate(this);
+  changeGender(gender: string): void {
+    this.gender = gender === "M" ? Gender.MALE : Gender.FEMALE;
+    // this.validate(["gender"]);
   }
 
   activate(): void {
@@ -60,12 +60,9 @@ export class AnimalCategory extends Entity {
     this.isActive = false;
   }
 
-  static validate(entity: AnimalCategory) {
+  validate(fields?: string[]) {
     const validator = AnimalCategoryValidatorFactory.create();
-    const isValid = validator.validate(entity);
-    if (!isValid) {
-      throw new EntityValidationError(validator.errors);
-    }
+    return validator.validate(this.notification, this, fields);
   }
 
   get entityId(): ValueObject {
