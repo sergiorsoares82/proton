@@ -1,7 +1,8 @@
 # Use official Node.js image with the version 20.5.1 (slim variant)
-FROM node:20.9.0-slim
+FROM node:20.11.1-slim
 
 RUN apt-get update && apt-get install -y git
+RUN npm install -g @nestjs/cli@10.1.17
 
 # Switch to a non-root user named 'node' for security reasons
 USER node
