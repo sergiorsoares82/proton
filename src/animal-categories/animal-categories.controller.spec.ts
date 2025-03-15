@@ -5,18 +5,21 @@ import { AnimalCategoryModel } from '@core/animal-category/infra/db/sequelize/an
 import { AnimalCategorySequelizeRepository } from '@core/animal-category/infra/db/sequelize/animal-category-sequelize.repository';
 import { AnimalCategoriesModule } from './animal-categories.module';
 import { DatabaseModule } from '../database/database.module';
+import { ConfigModule } from 'src/config/config.module';
+import { ConfigService } from '@nestjs/config';
 
 describe('AnimalCategoriesController', () => {
   let controller: AnimalCategoriesController;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [DatabaseModule, AnimalCategoriesModule], // ✅ Ensure module is imported
+      imports: [ConfigModule.forRoot(), DatabaseModule, AnimalCategoriesModule], // ✅ Ensure module is imported
     }).compile();
 
     controller = module.get<AnimalCategoriesController>(
       AnimalCategoriesController,
     );
+    console.log(module.get(ConfigService).get('DB_HOST'));
   });
 
   it('should be defined', () => {

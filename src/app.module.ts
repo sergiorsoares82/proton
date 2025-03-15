@@ -1,22 +1,12 @@
 import { Module } from '@nestjs/common';
+import { AnimalCategoriesModule } from './animal-categories/animal-categories.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { AnimalCategoriesModule } from './animal-categories/animal-categories.module';
-import { SequelizeModule } from '@nestjs/sequelize';
-import { AnimalCategoryModel } from '@core/animal-category/infra/db/sequelize/animal-category.model';
+import { ConfigModule } from './config/config.module';
 import { DatabaseModule } from './database/database.module';
 
 @Module({
-  imports: [
-    SequelizeModule.forRoot({
-      dialect: 'sqlite',
-      host: ':memory:',
-      logging: false,
-      models: [AnimalCategoryModel],
-    }),
-    AnimalCategoriesModule,
-    DatabaseModule,
-  ],
+  imports: [ConfigModule.forRoot(), DatabaseModule, AnimalCategoriesModule],
   controllers: [AppController],
   providers: [AppService],
 })
