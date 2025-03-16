@@ -64,7 +64,12 @@ export class AnimalCategoriesController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {}
+  async remove(
+    @Param('id', new ParseUUIDPipe({ errorHttpStatusCode: 422 }))
+    animalCategoryId: string,
+  ) {
+    return this.deleteUseCase.execute({ animalCategoryId });
+  }
 
   static serialize(output: AnimalCategoryOutput) {
     return new AnimalCategoryPresenter(output);
