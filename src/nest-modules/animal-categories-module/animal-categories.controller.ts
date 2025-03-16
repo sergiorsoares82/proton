@@ -7,6 +7,7 @@ import {
   Inject,
   Injectable,
   Param,
+  ParseUUIDPipe,
   Patch,
   Post,
 } from '@nestjs/common';
@@ -49,10 +50,18 @@ export class AnimalCategoriesController {
   findOne(@Param('id') id: string) {}
 
   @Patch(':id')
-  update(
-    @Param('id') id: string,
+  async update(
+    @Param('id', new ParseUUIDPipe({ errorHttpStatusCode: 422 }))
+    animalCategoryId: string,
     @Body() updateAnimalCategoryDto: UpdateAnimalCategoryDto,
-  ) {}
+  ) {
+    const output = await this.updateUseCase.execute({
+      animalCategoryId,
+      ...updateAnimalCategoryDto,
+    });
+
+    return AnimalCategoriesController.serialize(output);
+  }
 
   @Delete(':id')
   remove(@Param('id') id: string) {}

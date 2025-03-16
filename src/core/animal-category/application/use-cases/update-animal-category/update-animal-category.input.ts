@@ -7,7 +7,7 @@ import {
 } from "class-validator";
 
 export type UpdateAnimalCategoryInputConstructorProps = {
-  id: string;
+  animalCategoryId: string;
   name?: string;
   gender?: string;
   isActive?: boolean;
@@ -16,7 +16,7 @@ export type UpdateAnimalCategoryInputConstructorProps = {
 export class UpdateAnimalCategoryInput {
   @IsString()
   @IsNotEmpty()
-  id: string;
+  animalCategoryId: string;
 
   @IsString()
   @IsOptional()
@@ -32,7 +32,7 @@ export class UpdateAnimalCategoryInput {
 
   constructor(props?: UpdateAnimalCategoryInputConstructorProps) {
     if (!props) return;
-    this.id = props.id;
+    this.animalCategoryId = props.animalCategoryId;
     props.name && (this.name = props.name);
     props.gender && (this.description = props.gender);
     props.isActive !== null &&
