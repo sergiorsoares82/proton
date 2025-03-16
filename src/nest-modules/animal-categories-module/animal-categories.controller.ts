@@ -17,6 +17,8 @@ import { UpdateAnimalCategoryUseCase } from '@core/animal-category/application/u
 import { DeleteAnimalCategoryUseCase } from '@core/animal-category/application/use-cases/delete-animal-category/delete-animal-category.use-case';
 import { GetAnimalCategoryUseCase } from '@core/animal-category/application/use-cases/get-animal-category/get-animal-category.use-case';
 import { ListAnimalCategoriesUseCase } from '@core/animal-category/application/use-cases/list-animal-category/list-animal-categories.use-case';
+import type { AnimalCategoryOutput } from '@core/animal-category/application/use-cases/common/animal-category.output';
+import { AnimalCategoryPresenter } from './animal-categories-presenter';
 
 @Controller('animal-categories')
 export class AnimalCategoriesController {
@@ -54,4 +56,8 @@ export class AnimalCategoriesController {
 
   @Delete(':id')
   remove(@Param('id') id: string) {}
+
+  static serialize(output: AnimalCategoryOutput) {
+    return new AnimalCategoryPresenter(output);
+  }
 }
