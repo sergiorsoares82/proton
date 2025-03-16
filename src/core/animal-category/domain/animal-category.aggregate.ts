@@ -1,29 +1,29 @@
-import { Entity } from "../../shared/domain/entity";
-import { EntityValidationError } from "../../shared/domain/validators/validation.error";
-import type { ValueObject } from "../../shared/domain/value-object";
-import { Uuid } from "../../shared/domain/value-objects/uuid.vo";
-import { AnimalCategoryFakeBuilder } from "./animal-category-fake.builder";
-import { AnimalCategoryValidatorFactory } from "./animal-category.validator";
-import { Gender } from "./animal.aggregate";
+import { Entity } from '../../shared/domain/entity';
+import { EntityValidationError } from '../../shared/domain/validators/validation.error';
+import type { ValueObject } from '../../shared/domain/value-object';
+import { Uuid } from '../../shared/domain/value-objects/uuid.vo';
+import { AnimalCategoryFakeBuilder } from './animal-category-fake.builder';
+import { AnimalCategoryValidatorFactory } from './animal-category.validator';
+import { Gender } from './animal.aggregate';
 
 type AnimalCategoryConstructorProps = {
   animalCategoryId?: Uuid;
   name: string;
-  gender: Gender;
+  gender: string;
   isActive?: boolean;
   createdAt?: Date;
 };
 
 type AnimalCategoryCreateCommand = {
   name: string;
-  gender: Gender;
+  gender: string;
   isActive?: boolean;
 };
 
 export class AnimalCategory extends Entity {
   animalCategoryId: Uuid;
   name: string;
-  gender: Gender;
+  gender: string;
   isActive: boolean;
   createdAt: Date;
 
@@ -38,17 +38,17 @@ export class AnimalCategory extends Entity {
 
   static create(props: AnimalCategoryCreateCommand): AnimalCategory {
     const animalCategory = new AnimalCategory(props);
-    animalCategory.validate(["name", "gender"]);
+    animalCategory.validate(['name', 'gender']);
     return animalCategory;
   }
 
   changeName(name: string): void {
     this.name = name;
-    this.validate(["name"]);
+    this.validate(['name']);
   }
 
   changeGender(gender: string): void {
-    this.gender = gender === "M" ? Gender.MALE : Gender.FEMALE;
+    this.gender = gender;
     // this.validate(["gender"]);
   }
 

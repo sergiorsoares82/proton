@@ -1,10 +1,11 @@
+import { Gender } from '@core/animal-category/domain/animal.aggregate';
 import {
   IsBoolean,
   IsNotEmpty,
   IsOptional,
   IsString,
   validateSync,
-} from "class-validator";
+} from 'class-validator';
 
 export type UpdateAnimalCategoryInputConstructorProps = {
   animalCategoryId: string;
@@ -24,20 +25,20 @@ export class UpdateAnimalCategoryInput {
 
   @IsString()
   @IsOptional()
-  description?: string;
+  gender?: string;
 
   @IsBoolean()
   @IsOptional()
-  is_active?: boolean;
+  isActive?: boolean;
 
   constructor(props?: UpdateAnimalCategoryInputConstructorProps) {
     if (!props) return;
     this.animalCategoryId = props.animalCategoryId;
     props.name && (this.name = props.name);
-    props.gender && (this.description = props.gender);
+    props.gender && (this.gender = props.gender);
     props.isActive !== null &&
       props.isActive !== undefined &&
-      (this.is_active = props.isActive);
+      (this.isActive = props.isActive);
   }
 }
 

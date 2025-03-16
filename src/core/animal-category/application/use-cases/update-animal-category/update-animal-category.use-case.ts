@@ -1,20 +1,20 @@
-import type { IUseCase } from "../../../../shared/application/use-case.interface";
-import { NotFoundError } from "../../../../shared/domain/errors/not-found.error";
-import { Uuid } from "../../../../shared/domain/value-objects/uuid.vo";
-import { AnimalCategory } from "../../../domain/animal-category.aggregate";
-import type { IAnimalCategoryRepository } from "../../../domain/animal-category.repository";
-import type { Gender } from "../../../domain/animal.aggregate";
-import { AnimalCategoryOutputMapper } from "../common/animal-category.output";
+import type { IUseCase } from '../../../../shared/application/use-case.interface';
+import { NotFoundError } from '../../../../shared/domain/errors/not-found.error';
+import { Uuid } from '../../../../shared/domain/value-objects/uuid.vo';
+import { AnimalCategory } from '../../../domain/animal-category.aggregate';
+import type { IAnimalCategoryRepository } from '../../../domain/animal-category.repository';
+import type { Gender } from '../../../domain/animal.aggregate';
+import { AnimalCategoryOutputMapper } from '../common/animal-category.output';
 
 export class UpdateAnimalCategoryUseCase
   implements IUseCase<UpdateAnimalCategoryInput, UpdateAnimalCategoryOutput>
 {
   constructor(
-    private readonly animalCategoryRepository: IAnimalCategoryRepository
+    private readonly animalCategoryRepository: IAnimalCategoryRepository,
   ) {}
 
   async execute(
-    input: UpdateAnimalCategoryInput
+    input: UpdateAnimalCategoryInput,
   ): Promise<UpdateAnimalCategoryOutput> {
     const uuid = new Uuid(input.animalCategoryId);
     const animalCategory = await this.animalCategoryRepository.findById(uuid);
@@ -25,7 +25,7 @@ export class UpdateAnimalCategoryUseCase
 
     input.name && animalCategory.changeName(input.name);
 
-    if ("gender" in input) {
+    if ('gender' in input) {
       animalCategory.changeGender(input.gender);
     }
 
@@ -42,14 +42,14 @@ export class UpdateAnimalCategoryUseCase
 export type UpdateAnimalCategoryInput = {
   animalCategoryId: string;
   name?: string;
-  gender?: Gender;
+  gender?: string;
   isActive?: boolean;
 };
 
 export type UpdateAnimalCategoryOutput = {
   animalCategoryId: string;
   name: string;
-  gender: Gender;
+  gender: string;
   isActive: boolean;
   createdAt: Date;
 };

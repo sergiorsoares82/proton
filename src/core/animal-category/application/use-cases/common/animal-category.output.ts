@@ -1,10 +1,10 @@
-import type { AnimalCategory } from "../../../domain/animal-category.aggregate";
-import type { Gender } from "../../../domain/animal.aggregate";
+import type { AnimalCategory } from '../../../domain/animal-category.aggregate';
+import type { Gender } from '../../../domain/animal.aggregate';
 
 export type AnimalCategoryOutput = {
   animalCategoryId: string;
   name: string;
-  gender: Gender;
+  gender: string;
   isActive: boolean;
   createdAt: Date;
 };

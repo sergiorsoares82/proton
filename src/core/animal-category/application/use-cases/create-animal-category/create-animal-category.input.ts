@@ -20,7 +20,7 @@ export class CreateAnimalCategoryInput {
 
   @IsString()
   @IsNotEmpty()
-  gender: Gender;
+  gender: string;
 
   @IsBoolean()
   @IsOptional()
@@ -29,7 +29,7 @@ export class CreateAnimalCategoryInput {
   constructor(props: CreateAnimalCategoryInputConstructorProps) {
     if (!props) return;
     this.name = props.name;
-    this.gender = props.gender === 'M' ? Gender.MALE : Gender.FEMALE;
+    this.gender = props.gender;
     this.isActive = props.isActive;
   }
 }

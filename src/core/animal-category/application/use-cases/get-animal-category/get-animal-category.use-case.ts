@@ -1,20 +1,20 @@
-import type { IUseCase } from "../../../../shared/application/use-case.interface";
-import { NotFoundError } from "../../../../shared/domain/errors/not-found.error";
-import { Uuid } from "../../../../shared/domain/value-objects/uuid.vo";
-import { AnimalCategory } from "../../../domain/animal-category.aggregate";
-import type { IAnimalCategoryRepository } from "../../../domain/animal-category.repository";
-import type { Gender } from "../../../domain/animal.aggregate";
-import { AnimalCategoryOutputMapper } from "../common/animal-category.output";
+import type { IUseCase } from '../../../../shared/application/use-case.interface';
+import { NotFoundError } from '../../../../shared/domain/errors/not-found.error';
+import { Uuid } from '../../../../shared/domain/value-objects/uuid.vo';
+import { AnimalCategory } from '../../../domain/animal-category.aggregate';
+import type { IAnimalCategoryRepository } from '../../../domain/animal-category.repository';
+import type { Gender } from '../../../domain/animal.aggregate';
+import { AnimalCategoryOutputMapper } from '../common/animal-category.output';
 
 export class GetAnimalCategoryUseCase
   implements IUseCase<GetAnimalCategoryInput, GetAnimalCategoryOutput>
 {
   constructor(
-    private readonly animalCategoryRepository: IAnimalCategoryRepository
+    private readonly animalCategoryRepository: IAnimalCategoryRepository,
   ) {}
 
   async execute(
-    input: GetAnimalCategoryInput
+    input: GetAnimalCategoryInput,
   ): Promise<GetAnimalCategoryOutput> {
     const uuid = new Uuid(input.animalCategoryId);
     const category = await this.animalCategoryRepository.findById(uuid);
@@ -33,7 +33,7 @@ export type GetAnimalCategoryInput = {
 export type GetAnimalCategoryOutput = {
   animalCategoryId: string;
   name: string;
-  gender: Gender;
+  gender: string;
   isActive: boolean;
   createdAt: Date;
 };

@@ -44,8 +44,9 @@ export class AnimalCategoriesController {
   private listUseCase: ListAnimalCategoriesUseCase;
 
   @Post()
-  create(@Body() createAnimalCategoryDto: CreateAnimalCategoryDto) {
-    return this.createUseCase.execute(createAnimalCategoryDto);
+  async create(@Body() createAnimalCategoryDto: CreateAnimalCategoryDto) {
+    const output = await this.createUseCase.execute(createAnimalCategoryDto);
+    return AnimalCategoriesController.serialize(output);
   }
 
   @Get()
