@@ -1,19 +1,19 @@
-import { Op } from "sequelize";
-import { NotFoundError } from "../../../../shared/domain/errors/not-found.error";
-import { Uuid } from "../../../../shared/domain/value-objects/uuid.vo";
-import { AnimalCategory } from "../../../domain/animal-category.aggregate";
+import { Op } from 'sequelize';
+import { NotFoundError } from '../../../../shared/domain/errors/not-found.error';
+import { Uuid } from '../../../../shared/domain/value-objects/uuid.vo';
+import { AnimalCategory } from '../../../domain/animal-category.aggregate';
 import {
   AnimalCategorySearchParams,
   AnimalCategorySearchResult,
   IAnimalCategoryRepository,
-} from "../../../domain/animal-category.repository";
-import { AnimalCategoryModel } from "./animal-category.model";
-import { AnimalCategoryModelMapper } from "./animal-category-model.mapper";
+} from '../../../domain/animal-category.repository';
+import { AnimalCategoryModel } from './animal-category.model';
+import { AnimalCategoryModelMapper } from './animal-category-model.mapper';
 
 export class AnimalCategorySequelizeRepository
   implements IAnimalCategoryRepository
 {
-  sortableFields: string[] = ["name", "createdAt"];
+  sortableFields: string[] = ['name', 'createdAt'];
 
   constructor(private animalCategoryModel: typeof AnimalCategoryModel) {}
 
@@ -31,7 +31,7 @@ export class AnimalCategorySequelizeRepository
 
   async update(entity: AnimalCategory): Promise<void> {
     const id = entity.animalCategoryId.id;
-    const model = await this._get(id);
+    const model = await this.animalCategoryModel.findByPk(id);
 
     if (!model) {
       throw new NotFoundError(id, this.getEntity());
@@ -44,7 +44,7 @@ export class AnimalCategorySequelizeRepository
 
   async delete(entityId: Uuid): Promise<void> {
     const id = entityId.id;
-    const model = await this._get(id);
+    const model = await this.animalCategoryModel.findByPk(id);
 
     if (!model) {
       throw new NotFoundError(id, this.getEntity());
@@ -67,7 +67,7 @@ export class AnimalCategorySequelizeRepository
   }
 
   async search(
-    props: AnimalCategorySearchParams
+    props: AnimalCategorySearchParams,
   ): Promise<AnimalCategorySearchResult> {
     const offset = (props.page - 1) * props.per_page;
     const limit = props.per_page;
@@ -81,7 +81,7 @@ export class AnimalCategorySequelizeRepository
         }),
         ...(props.sort && this.sortableFields.includes(props.sort)
           ? { order: [[props.sort, props.sort_dir]] }
-          : { order: [["createdAt", "desc"]] }),
+          : { order: [['createdAt', 'desc']] }),
         offset,
         limit,
       });
@@ -95,9 +95,9 @@ export class AnimalCategorySequelizeRepository
     });
   }
 
-  private async _get(id: string) {
-    return await this.animalCategoryModel.findByPk(id);
-  }
+  // private async _get(id: string) {
+  //   return await this.animalCategoryModel.findByPk(id);
+  // }
 
   getEntity(): new (...args: any[]) => AnimalCategory {
     return AnimalCategory;
