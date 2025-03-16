@@ -1,8 +1,12 @@
-import type { IUseCase } from "../../../../shared/application/use-case.interface";
-import { AnimalCategory } from "../../../domain/animal-category.aggregate";
-import type { IAnimalCategoryRepository } from "../../../domain/animal-category.repository";
-import type { Gender } from "../../../domain/animal.aggregate";
-import { AnimalCategoryOutputMapper } from "../common/animal-category.output";
+import type { IUseCase } from '../../../../shared/application/use-case.interface';
+import { AnimalCategory } from '../../../domain/animal-category.aggregate';
+import type { IAnimalCategoryRepository } from '../../../domain/animal-category.repository';
+import type { Gender } from '../../../domain/animal.aggregate';
+import {
+  AnimalCategoryOutputMapper,
+  type AnimalCategoryOutput,
+} from '../common/animal-category.output';
+import type { CreateAnimalCategoryInput } from './create-animal-category.input';
 
 export class CreateAnimalCategoryUseCase
   implements IUseCase<CreateAnimalCategoryInput, CreateAnimalCategoryOutput>
@@ -10,7 +14,7 @@ export class CreateAnimalCategoryUseCase
   constructor(private readonly animalCategoryRepo: IAnimalCategoryRepository) {}
 
   async execute(
-    input: CreateAnimalCategoryInput
+    input: CreateAnimalCategoryInput,
   ): Promise<CreateAnimalCategoryOutput> {
     const entity = AnimalCategory.create(input);
 
@@ -20,16 +24,4 @@ export class CreateAnimalCategoryUseCase
   }
 }
 
-export type CreateAnimalCategoryInput = {
-  name: string;
-  gender: Gender;
-  isActive?: boolean;
-};
-
-export type CreateAnimalCategoryOutput = {
-  animalCategoryId: string;
-  name: string;
-  gender: Gender;
-  isActive: boolean;
-  createdAt: Date;
-};
+export type CreateAnimalCategoryOutput = AnimalCategoryOutput;

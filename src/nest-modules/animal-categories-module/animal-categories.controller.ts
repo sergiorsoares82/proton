@@ -12,16 +12,33 @@ import {
 } from '@nestjs/common';
 import { CreateAnimalCategoryDto } from './dto/create-animal-category.dto';
 import { UpdateAnimalCategoryDto } from './dto/update-animal-category.dto';
+import { CreateAnimalCategoryUseCase } from '@core/animal-category/application/use-cases/create-animal-category/create-animal-category.use-case';
+import { UpdateAnimalCategoryUseCase } from '@core/animal-category/application/use-cases/update-animal-category/update-animal-category.use-case';
+import { DeleteAnimalCategoryUseCase } from '@core/animal-category/application/use-cases/delete-animal-category/delete-animal-category.use-case';
+import { GetAnimalCategoryUseCase } from '@core/animal-category/application/use-cases/get-animal-category/get-animal-category.use-case';
+import { ListAnimalCategoriesUseCase } from '@core/animal-category/application/use-cases/list-animal-category/list-animal-categories.use-case';
 
 @Controller('animal-categories')
 export class AnimalCategoriesController {
-  constructor(
-    @Inject(AnimalCategorySequelizeRepository)
-    private readonly animalCategorySequelizeRepository: AnimalCategorySequelizeRepository,
-  ) {}
+  @Inject(CreateAnimalCategoryUseCase)
+  private createUseCase: CreateAnimalCategoryUseCase;
+
+  @Inject(UpdateAnimalCategoryUseCase)
+  private updateUseCase: UpdateAnimalCategoryUseCase;
+
+  @Inject(DeleteAnimalCategoryUseCase)
+  private deleteUseCase: DeleteAnimalCategoryUseCase;
+
+  @Inject(GetAnimalCategoryUseCase)
+  private getUseCase: GetAnimalCategoryUseCase;
+
+  @Inject(ListAnimalCategoriesUseCase)
+  private listUseCase: ListAnimalCategoriesUseCase;
 
   @Post()
-  create(@Body() createAnimalCategoryDto: CreateAnimalCategoryDto) {}
+  create(@Body() createAnimalCategoryDto: CreateAnimalCategoryDto) {
+    return this.createUseCase.execute(createAnimalCategoryDto);
+  }
 
   @Get()
   findAll() {}
