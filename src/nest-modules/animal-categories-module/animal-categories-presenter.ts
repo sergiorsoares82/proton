@@ -1,7 +1,7 @@
 import { Transform } from 'class-transformer';
 import type { AnimalCategoryOutput } from '@core/animal-category/application/use-cases/common/animal-category.output';
 import type { ListAnimalCategoriesOutput } from '@core/animal-category/application/use-cases/list-animal-category/list-animal-categories.use-case';
-import { CollectionPresenter } from 'src/shared-module/collection.presenter';
+import { CollectionPresenter } from 'src/nest-modules/shared-module/collection.presenter';
 
 export class AnimalCategoryPresenter {
   animalCategoryId: string;
