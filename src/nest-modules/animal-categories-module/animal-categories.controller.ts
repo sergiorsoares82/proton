@@ -47,7 +47,14 @@ export class AnimalCategoriesController {
   findAll() {}
 
   @Get(':id')
-  findOne(@Param('id') id: string) {}
+  async findOne(
+    @Param('id', new ParseUUIDPipe({ errorHttpStatusCode: 422 }))
+    animalCategoryId: string,
+  ) {
+    const output = await this.getUseCase.execute({ animalCategoryId });
+
+    return AnimalCategoriesController.serialize(output);
+  }
 
   @Patch(':id')
   async update(
