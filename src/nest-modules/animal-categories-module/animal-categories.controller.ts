@@ -10,6 +10,7 @@ import {
   ParseUUIDPipe,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 import { CreateAnimalCategoryDto } from './dto/create-animal-category.dto';
 import { UpdateAnimalCategoryDto } from './dto/update-animal-category.dto';
@@ -19,7 +20,11 @@ import { DeleteAnimalCategoryUseCase } from '@core/animal-category/application/u
 import { GetAnimalCategoryUseCase } from '@core/animal-category/application/use-cases/get-animal-category/get-animal-category.use-case';
 import { ListAnimalCategoriesUseCase } from '@core/animal-category/application/use-cases/list-animal-category/list-animal-categories.use-case';
 import type { AnimalCategoryOutput } from '@core/animal-category/application/use-cases/common/animal-category.output';
-import { AnimalCategoryPresenter } from './animal-categories-presenter';
+import {
+  AnimalCategoryCollectionPresenter,
+  AnimalCategoryPresenter,
+} from './animal-categories-presenter';
+import type { SearchAnimalCategoriesDto } from './dto/search-animal-categories.dto';
 
 @Controller('animal-categories')
 export class AnimalCategoriesController {
@@ -44,7 +49,10 @@ export class AnimalCategoriesController {
   }
 
   @Get()
-  findAll() {}
+  async search(@Query() searchParamsDto: SearchAnimalCategoriesDto) {
+    const output = await this.listUseCase.execute(searchParamsDto);
+    return new AnimalCategoryCollectionPresenter(output);
+  }
 
   @Get(':id')
   async findOne(

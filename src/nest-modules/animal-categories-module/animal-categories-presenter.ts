@@ -1,6 +1,7 @@
 import { Transform } from 'class-transformer';
-import type { AnimalCategory } from './entities/animal-category.entity';
 import type { AnimalCategoryOutput } from '@core/animal-category/application/use-cases/common/animal-category.output';
+import type { ListAnimalCategoriesOutput } from '@core/animal-category/application/use-cases/list-animal-category/list-animal-categories.use-case';
+import { CollectionPresenter } from 'src/shared-module/collection.presenter';
 
 export class AnimalCategoryPresenter {
   animalCategoryId: string;
@@ -16,5 +17,15 @@ export class AnimalCategoryPresenter {
     this.gender = output.gender;
     this.isActive = output.isActive;
     this.createdAt = output.createdAt;
+  }
+}
+
+export class AnimalCategoryCollectionPresenter extends CollectionPresenter {
+  data: AnimalCategoryPresenter[];
+
+  constructor(output: ListAnimalCategoriesOutput) {
+    const { items, ...paginationProps } = output;
+    super(paginationProps);
+    this.data = items.map((i) => new AnimalCategoryPresenter(i));
   }
 }
