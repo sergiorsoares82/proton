@@ -2,7 +2,7 @@ import { AnimalCategoryModel } from '@core/animal-category/infra/db/sequelize/an
 import { Module } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { SequelizeModule } from '@nestjs/sequelize';
-import type { CONFIG_SCHEMA_TYPE } from 'src/config/config.module';
+import type { CONFIG_SCHEMA_TYPE } from 'src/nest-modules/config-module/config.module';
 
 const models = [AnimalCategoryModel];
 

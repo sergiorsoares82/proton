@@ -5,7 +5,7 @@ import { AnimalCategoryModel } from '@core/animal-category/infra/db/sequelize/an
 import { AnimalCategorySequelizeRepository } from '@core/animal-category/infra/db/sequelize/animal-category-sequelize.repository';
 import { AnimalCategoriesModule } from './animal-categories.module';
 import { DatabaseModule } from '../database/database.module';
-import { ConfigModule } from 'src/config/config.module';
+import { ConfigModule } from 'src/nest-modules/config-module/config.module';
 import { ConfigService } from '@nestjs/config';
 
 describe('AnimalCategoriesController', () => {
