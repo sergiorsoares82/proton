@@ -1,7 +1,7 @@
-import { EntityValidationError } from "../../../../shared/domain/validators/validation.error";
-import { Uuid } from "../../../../shared/domain/value-objects/uuid.vo";
-import { AnimalCategory } from "../../../domain/animal-category.aggregate";
-import { AnimalCategoryModel } from "./animal-category.model";
+import { EntityValidationError } from '../../../../shared/domain/validators/validation.error';
+import { Uuid } from '../../../../shared/domain/value-objects/uuid.vo';
+import { AnimalCategory } from '../../../domain/animal-category.aggregate';
+import { AnimalCategoryModel } from './animal-category.model';
 
 export class AnimalCategoryModelMapper {
   static toModel(entity: AnimalCategory): AnimalCategoryModel {

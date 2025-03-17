@@ -4,19 +4,19 @@ import {
   Model,
   PrimaryKey,
   Table,
-} from "sequelize-typescript";
-import { Gender } from "../../../domain/animal.aggregate";
+} from 'sequelize-typescript';
+import { Gender } from '../../../domain/animal.aggregate';
 
 export type AnimalCategoryModelProps = {
   animalCategoryId: string;
   name: string;
-  gender: Gender;
+  gender: string;
   isActive: boolean;
   createdAt: Date;
 };
 
 @Table({
-  tableName: "animal_categories",
+  tableName: 'animal_categories',
   timestamps: false,
 })
 export class AnimalCategoryModel extends Model<AnimalCategoryModelProps> {
@@ -31,7 +31,7 @@ export class AnimalCategoryModel extends Model<AnimalCategoryModelProps> {
     allowNull: false,
     type: DataType.ENUM(...Object.values(Gender)), // Converts enum to ENUM values
   })
-  declare gender: Gender;
+  declare gender: string;
 
   @Column({ allowNull: false, type: DataType.BOOLEAN })
   declare isActive: boolean;

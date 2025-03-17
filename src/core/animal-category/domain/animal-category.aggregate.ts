@@ -1,10 +1,8 @@
 import { Entity } from '../../shared/domain/entity';
-import { EntityValidationError } from '../../shared/domain/validators/validation.error';
 import type { ValueObject } from '../../shared/domain/value-object';
 import { Uuid } from '../../shared/domain/value-objects/uuid.vo';
 import { AnimalCategoryFakeBuilder } from './animal-category-fake.builder';
 import { AnimalCategoryValidatorFactory } from './animal-category.validator';
-import { Gender } from './animal.aggregate';
 
 type AnimalCategoryConstructorProps = {
   animalCategoryId?: Uuid;

@@ -1,0 +1,11 @@
+### Create Category
+POST http://localhost:3000/animal-categories
+Content-Type: application/json
+
+{
+  "name": "Category 1",
+  "gender": "F"
+}
+
+###
+ GET http://localhost:3000/categories
