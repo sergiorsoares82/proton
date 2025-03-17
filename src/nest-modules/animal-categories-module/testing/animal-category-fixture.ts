@@ -1,7 +1,13 @@
 import { AnimalCategory } from '@core/animal-category/domain/animal-category.aggregate';
 import { Gender } from '@core/animal-category/domain/animal.aggregate';
 
-const _keysInResponse = ['id', 'name', 'gender', 'isActive', 'createdAt'];
+const _keysInResponse = [
+  'animalCategoryId',
+  'name',
+  'gender',
+  'isActive',
+  'createdAt',
+];
 
 export class GetAnimalCategoryFixture {
   static keysInResponse = _keysInResponse;
@@ -64,13 +70,19 @@ export class CreateAnimalCategoryFixture {
       EMPTY: {
         send_data: {},
         expected: {
-          message: ['name should not be empty', 'name must be a string'],
+          message: [
+            'name should not be empty',
+            'name must be a string',
+            'gender should not be empty',
+            'gender must be a string',
+          ],
           ...defaultExpected,
         },
       },
       NAME_UNDEFINED: {
         send_data: {
           name: undefined,
+          gender: 'F',
         },
         expected: {
           message: ['name should not be empty', 'name must be a string'],
@@ -80,6 +92,7 @@ export class CreateAnimalCategoryFixture {
       NAME_NULL: {
         send_data: {
           name: null,
+          gender: 'F',
         },
         expected: {
           message: ['name should not be empty', 'name must be a string'],
@@ -89,6 +102,7 @@ export class CreateAnimalCategoryFixture {
       NAME_EMPTY: {
         send_data: {
           name: '',
+          gender: 'F',
         },
         expected: {
           message: ['name should not be empty'],
@@ -97,19 +111,17 @@ export class CreateAnimalCategoryFixture {
       },
       GENDER_NOT_A_STRING: {
         send_data: {
+          name: 'Category',
           gender: 5,
         },
         expected: {
-          message: [
-            'name should not be empty',
-            'name must be a string',
-            'gender must be a string',
-          ],
+          message: ['gender must be a string'],
           ...defaultExpected,
         },
       },
       IS_ACTIVE_NOT_A_BOOLEAN: {
         send_data: {
+          gender: 'F',
           isActive: 'a',
         },
         expected: {
@@ -135,6 +147,7 @@ export class CreateAnimalCategoryFixture {
       NAME_TOO_LONG: {
         send_data: {
           name: faker.withInvalidNameTooLong().name,
+          gender: 'F',
         },
         expected: {
           message: ['name must be shorter than or equal to 255 characters'],

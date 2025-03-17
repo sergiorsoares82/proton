@@ -1,3 +1,4 @@
+import { EntityValidationError } from '@core/shared/domain/validators/validation.error';
 import type { IUseCase } from '../../../../shared/application/use-case.interface';
 import { AnimalCategory } from '../../../domain/animal-category.aggregate';
 import type { IAnimalCategoryRepository } from '../../../domain/animal-category.repository';
@@ -17,6 +18,10 @@ export class CreateAnimalCategoryUseCase
     input: CreateAnimalCategoryInput,
   ): Promise<CreateAnimalCategoryOutput> {
     const entity = AnimalCategory.create(input);
+
+    if (entity.notification.hasErrors()) {
+      throw new EntityValidationError(entity.notification.toJSON());
+    }
 
     await this.animalCategoryRepo.insert(entity);
 

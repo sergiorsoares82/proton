@@ -1,4 +1,3 @@
-import { Gender } from '@core/animal-category/domain/animal.aggregate';
 import {
   IsBoolean,
   IsNotEmpty,
