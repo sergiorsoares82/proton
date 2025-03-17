@@ -4,6 +4,7 @@ import {
   Controller,
   Delete,
   Get,
+  HttpCode,
   Inject,
   Injectable,
   Param,
@@ -79,6 +80,7 @@ export class AnimalCategoriesController {
     return AnimalCategoriesController.serialize(output);
   }
 
+  @HttpCode(204)
   @Delete(':id')
   async remove(
     @Param('id', new ParseUUIDPipe({ errorHttpStatusCode: 422 }))

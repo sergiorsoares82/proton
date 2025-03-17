@@ -361,3 +361,49 @@ export class ListAnimalCategoriesFixture {
     return { arrange, entitiesMap };
   }
 }
+
+export class DeleteAnimalCategoryFixture {
+  static arrangeInvalidRequest() {
+    const defaultExpected = {
+      statusCode: 422,
+      error: 'Unprocessable Entity',
+    };
+
+    return {
+      EMPTY: {
+        send_data: {},
+        expected: {
+          message: ['id should not be empty', 'id must be a string'],
+          ...defaultExpected,
+        },
+      },
+      ID_UNDEFINED: {
+        send_data: {
+          id: undefined,
+        },
+        expected: {
+          message: ['id should not be empty', 'id must be a string'],
+          ...defaultExpected,
+        },
+      },
+      ID_NULL: {
+        send_data: {
+          id: null,
+        },
+        expected: {
+          message: ['id should not be empty', 'id must be a string'],
+          ...defaultExpected,
+        },
+      },
+      ID_EMPTY: {
+        send_data: {
+          id: '',
+        },
+        expected: {
+          message: ['id should not be empty'],
+          ...defaultExpected,
+        },
+      },
+    };
+  }
+}
