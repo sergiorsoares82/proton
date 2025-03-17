@@ -1,15 +1,15 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { ConfigModule } from 'src/nest-modules/config-module/config.module';
-import { DatabaseModule } from '../database-module/database.module';
-import { AnimalCategoriesController } from './animal-categories.controller';
-import { AnimalCategoriesModule } from './animal-categories.module';
+import { DatabaseModule } from '../../database-module/database.module';
+import { AnimalCategoriesController } from '../animal-categories.controller';
+import { AnimalCategoriesModule } from '../animal-categories.module';
 import type { CreateAnimalCategoryOutput } from '@core/animal-category/application/use-cases/create-animal-category/create-animal-category.use-case';
 import { Gender } from '@core/animal-category/domain/animal.aggregate';
-import type { CreateAnimalCategoryDto } from './dto/create-animal-category.dto';
+import type { CreateAnimalCategoryDto } from '../dto/create-animal-category.dto';
 import {
   AnimalCategoryCollectionPresenter,
   AnimalCategoryPresenter,
-} from './animal-categories-presenter';
+} from '../animal-categories-presenter';
 import type { UpdateAnimalCategoryOutput } from '@core/animal-category/application/use-cases/update-animal-category/update-animal-category.use-case';
 import type { UpdateAnimalCategoryInput } from '@core/animal-category/application/use-cases/update-animal-category/update-animal-category.input';
 import type { GetAnimalCategoryOutput } from '@core/animal-category/application/use-cases/get-animal-category/get-animal-category.use-case';
